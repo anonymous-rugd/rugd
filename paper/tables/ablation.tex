@@ -1,0 +1,22 @@
+% Source: outputs/studies/final_study/ablations/results_all.csv, aggregated per
+% variant over nine city-seed runs each.
+% Regenerate with: python paper/tables/generate_tables.py
+\begin{table}[t]
+\centering
+\caption{Final-architecture ablations, mean $\pm$ SD over nine city--seed runs each. $\Delta$ is clean severe-AUPRC change from full \methodname{}; bold marks the single largest-magnitude $\Delta$. Domain alignment's removal costs roughly $4\times$ the next-largest component effect (graph diffusion) and roughly $30\times$ the rare-event-specific mechanisms (class balance, evidence).}
+\label{tab:ablation}
+\begin{tabular}{lccccc}
+\toprule
+Variant removed & Macro-F1 & Clean severe AUPRC & $\Delta$ & NLL & ECE \\
+\midrule
+w/o graph diffusion & 0.8325$\pm$0.0128 & 0.8795$\pm$0.0336 & -0.0088 & 0.2714 & 0.0076 \\
+w/o topology & 0.8308$\pm$0.0134 & 0.8786$\pm$0.0352 & -0.0097 & 0.2730 & 0.0079 \\
+w/o domain alignment & 0.8221$\pm$0.0129 & 0.8538$\pm$0.0403 & \textbf{-0.0344} & 0.3024 & 0.0128 \\
+w/o evidence & 0.8357$\pm$0.0113 & 0.8874$\pm$0.0314 & -0.0009 & 0.2632 & 0.0067 \\
+w/o focal modulation & 0.8374$\pm$0.0117 & 0.8842$\pm$0.0288 & -0.0041 & 0.2698 & 0.0098 \\
+w/o class balance & 0.8367$\pm$0.0116 & 0.8872$\pm$0.0320 & -0.0011 & 0.2626 & 0.0061 \\
+\midrule
+\textbf{Full ShiftGuard-RUGD} & \textbf{0.8381}$\pm$0.0112 & \textbf{0.8883}$\pm$0.0310 & --- & 0.2625 & 0.0066 \\
+\bottomrule
+\end{tabular}
+\end{table}

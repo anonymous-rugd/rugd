@@ -1,0 +1,20 @@
+% Source: outputs/studies/final_study/ablations/results_all.csv, aggregated to
+% paper/figures/data/ablation_delta.csv (severe_auprc mean per variant minus full-RUGD mean).
+% Regenerate with: python paper/figures/regenerate_figure_data.py
+\begin{tikzpicture}
+\begin{axis}[
+  xbar, y=7mm, enlarge y limits={abs=5mm},
+  xlabel={Clean severe AUPRC $\Delta$ vs.\ full ShiftGuard-RUGD},
+  xmin=-0.04, xmax=0.002,
+  symbolic y coords={w/o evidence,w/o class balance,w/o focal modulation,w/o graph diffusion,w/o topology,w/o domain alignment},
+  ytick=data,
+  bar width=3.6mm,
+  width=\linewidth, height=5.2cm,
+  tick label style={font=\scriptsize},
+  label style={font=\scriptsize},
+  nodes near coords, every node near coord/.append style={font=\tiny},
+]
+\addplot [fill=red!45!orange!35, draw=red!55!black]
+  table [x=delta, y=label, col sep=comma] {figures/data/ablation_delta.csv};
+\end{axis}
+\end{tikzpicture}

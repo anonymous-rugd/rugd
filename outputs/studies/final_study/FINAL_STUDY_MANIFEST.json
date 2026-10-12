@@ -1,0 +1,187 @@
+{
+  "study": "final_study",
+  "status": "final_retained_study",
+  "model": "ShiftGuard-RUGD (degree-normalized diffusion)",
+  "records": [
+    {
+      "run": "outputs/studies/final_study/main/TrafficCD/opencity_scratch/seed_17",
+      "checkpoint_sha256": "96f2e9802a1df1faca9423e669796310841d9f38432410e61278110c1d57f593",
+      "predictions_sha256": "d9ba874ea828db18f0bc20c59fe0620c202cddc7c5318877a49ab8a1c76f21f0"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficCD/opencity_scratch/seed_2025",
+      "checkpoint_sha256": "fb2c2bba27123a90e3a3093898620e8bbbac87643bcc28079f47875917df9e2c",
+      "predictions_sha256": "7194d47e0af6cbe490060478383efeff597fa79320b7d90d15a2b9f457a5a2da"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficCD/opencity_scratch/seed_42",
+      "checkpoint_sha256": "458683643e98878253516ef3daac5b4c23ea253c5a28d575ffde68570eaf14ec",
+      "predictions_sha256": "8e22b3832db2530d7b8918e95afc27b585572ea947d97e1ef7ea64250ac8a2a9"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficCD/rugd/seed_17",
+      "checkpoint_sha256": "ce39276f0bc65ab6a5bb5ace53f25dd10e98f5c57fd53e3a084491d183bc7495",
+      "predictions_sha256": "c06bee70de2855174ec935ec998455018cb536449b1a7284cc1336863a0afef0"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficCD/rugd/seed_2025",
+      "checkpoint_sha256": "694dbcdd035a1b653c778c7d068570c0571431154d443f9ed191d9115881d9f1",
+      "predictions_sha256": "aafe208e6d3266bc1c48e2d8ab9a8a63cbb905608e7979d2621c5e1f4d14aa7b"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficCD/rugd/seed_42",
+      "checkpoint_sha256": "ae1f091c55b6ffd768a152ae70cf0f3a555a6715f3d0bbf463130fe929d39415",
+      "predictions_sha256": "4a162437ee39560535ef5db16a26f4723bb026e90996f3ab58d7b674a6f6daf0"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficCD/staeformer_inductive/seed_17",
+      "checkpoint_sha256": "d79fc9bd3d18c60bb545b6683c938696b7f19f9fff31c9044ca731cefdbffdde",
+      "predictions_sha256": "907653c3b7deba7b7c1165ef2022afc40f91ed0d3501e363fec4d3ff60fa37ad"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficCD/staeformer_inductive/seed_2025",
+      "checkpoint_sha256": "65e8a21c413fe035d65d77562b4f12ffd06683ae3604afe750582b1a35e3a7d7",
+      "predictions_sha256": "232186d4c1776408f932474147d17437fd6a35f93e85bc4aa9e7386828db9651"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficCD/staeformer_inductive/seed_42",
+      "checkpoint_sha256": "745fe31fea65777ffcf0a0c982ef698d4f39189a2fb8ebded09250bf28d1a249",
+      "predictions_sha256": "2280375b779c1af8fa7d4cf414734be36249d918b7b2245243d6567834855ba9"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficCD/uignn_inductive/seed_17",
+      "checkpoint_sha256": "3f6e0c19cba90b6c0917232c07da38bfe11c4230eecb70c1e91fdce1d3e0c775",
+      "predictions_sha256": "aa3a7549754b1a53b3e84dc30233b114c630bd840820e305ef723342cb99570e"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficCD/uignn_inductive/seed_2025",
+      "checkpoint_sha256": "e6136681346d4766d782b728d0a23e55b5a137882dfd337862948af844e59af6",
+      "predictions_sha256": "05907518e10a60f131eb532924a697b8af878310b572462517c454733729051b"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficCD/uignn_inductive/seed_42",
+      "checkpoint_sha256": "bd9ecfa8c07e4b38abf62d741b765972d9cd3fb26333709654ecc111b516a31c",
+      "predictions_sha256": "d78971620f1e57385c731b247433fe3297998262491ee24ecc87b5420fdee756"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficHZ/opencity_scratch/seed_17",
+      "checkpoint_sha256": "ae436eb8ef134711dfd44f5ee7d77443a02f249c8dd557000ab8f2d5fa667e09",
+      "predictions_sha256": "caa3dd028b4c5b23d2d0616bd88b5880d28ee5c0cc1c9c0856488efd84eb2fda"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficHZ/opencity_scratch/seed_2025",
+      "checkpoint_sha256": "bad18ba0fc05865224c9599259bc1b82751845c477ada834970232cb4dc277b1",
+      "predictions_sha256": "3d79401f20b7e6d0687ebf682a282a1e317e773f46f9dfbd3c9d0991328f766b"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficHZ/opencity_scratch/seed_42",
+      "checkpoint_sha256": "429c85c3e68981bc4cb330d7d074cfe37d07ee920a6e9cf6b6f40ca718aeaf06",
+      "predictions_sha256": "2aa18ebc8fbd5e91e6f602a6b9af9c851eb6450dc1332320969f83e82f453522"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficHZ/rugd/seed_17",
+      "checkpoint_sha256": "4532729ffc66f7b0dcc904f1fa210217cb0a12a337367afc17570a8d6c7e4e93",
+      "predictions_sha256": "db24ec8b8002d3e94d64f47eea1e75a44a5f790fa612accd6e54a576ae660fa6"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficHZ/rugd/seed_2025",
+      "checkpoint_sha256": "3edde4b4de0d0e775db0261b6b40367a64dd00597756fa3fa1c3ac2ac2eab9a4",
+      "predictions_sha256": "2653e5f363acaada9489ee775243544cb26e5384d2651bf125c9e6cd1fbb808a"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficHZ/rugd/seed_42",
+      "checkpoint_sha256": "587f66fa3e57948bc06c23cb6ff9f5ca5960f4dd41a869a66a6982f6084b709c",
+      "predictions_sha256": "298900b7bd1c9b83370c065b174b589871ef2d8f7eb56d29d1f41638d3a35e53"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficHZ/staeformer_inductive/seed_17",
+      "checkpoint_sha256": "160e4c62d34b4d957d8d570f5afa6a9e3aeb4871ac9fe782650fecaa7a6047c9",
+      "predictions_sha256": "82f2dc5258b618ac903e528e5b6853cd2d4cc2fd645e7651bbf5d4950b348c11"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficHZ/staeformer_inductive/seed_2025",
+      "checkpoint_sha256": "1a603079e9e60624243fa2cf99599c4bee8a1fd064fc49fb1ae7bcc844e1ba9c",
+      "predictions_sha256": "50ce3ca719be78d5c749000a0c65b13b86e8ab2bdcf7b90efbbbdf2c49499862"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficHZ/staeformer_inductive/seed_42",
+      "checkpoint_sha256": "723277e574a070f63f3f669dccde92ac3c2cad6796e92c9d331822dd11f5aaa0",
+      "predictions_sha256": "3d570ff51d06d61bbe7ef9ba04084594a5f2c9e9ddfbecd9e0f82d21d5d4279e"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficHZ/uignn_inductive/seed_17",
+      "checkpoint_sha256": "94f043ea5102e530affbec2725da95ea00272c3ac83a07a6626e8b5c6aa5913f",
+      "predictions_sha256": "6260312e683ae48717ac946af6c706b247109ef5dc50e8bdd2f8ab4b6550e70f"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficHZ/uignn_inductive/seed_2025",
+      "checkpoint_sha256": "5f80ee96fe5d51853b1023a393ba658ffec822442b71127a7d8e8772481cc5b5",
+      "predictions_sha256": "fad4fc5b7549661d0148a6bca016b226db405c3ef785a34e5db7cffe3c504933"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficHZ/uignn_inductive/seed_42",
+      "checkpoint_sha256": "2fe0117551a5e389fb7ccc5e87fec5d24deecc7d2d8ad318f45cc1e645bf5a01",
+      "predictions_sha256": "becd1300fd018022730c023a2c4f59ceedd39671b66f1e14d97d3ba64244cdde"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficSH/opencity_scratch/seed_17",
+      "checkpoint_sha256": "82a0fdb978ee4aef7fa9f14f0eebb32954c4c3be44c71dd9d28fd6f2682b77ad",
+      "predictions_sha256": "3fd36b8c3067e08e513b6ea6909f05864bea2396a6ba61ac1a93bb6e26810514"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficSH/opencity_scratch/seed_2025",
+      "checkpoint_sha256": "2c2237606d4e37b3e9a1e43d5bf5185cf1857a66362913c8c7dbd646b0b63f41",
+      "predictions_sha256": "5ee9e86c0a3ff544a85ac28d82fd7c1ef52e9d5c48523d23d406e7fe781a859e"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficSH/opencity_scratch/seed_42",
+      "checkpoint_sha256": "a558daf75163d958b13db91c0a08776dc2fd4de90cfd636b05ec8fedccd6864c",
+      "predictions_sha256": "7d6e1f0771aa64ebc0d3d7082308e842b5b3e9e06f21a96bc4965bea237573fd"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficSH/rugd/seed_17",
+      "checkpoint_sha256": "d361d856f393bfc4cf06b8f484490af00196066e91b6db194342055a4efc9edd",
+      "predictions_sha256": "66c756ed854465a435c1cf6059eebd2887327368368d29b5f40a66827e3faad8"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficSH/rugd/seed_2025",
+      "checkpoint_sha256": "992b96988ab32e16c074a5144ff3f80bb68b51feddb61f5a26cd2ca2fd6ca73d",
+      "predictions_sha256": "a02887cf4b020a2bd352eb66d20163f95aed28afff4c339380d72fb97f0b69ca"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficSH/rugd/seed_42",
+      "checkpoint_sha256": "f09b2e300254df2f193d4613397b771c947f94b9631596e1d38f0ee6547e250a",
+      "predictions_sha256": "f46f245d5dddef60c2d90516f792b0689b3099e47304b183caba3c1cd6ca2eeb"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficSH/staeformer_inductive/seed_17",
+      "checkpoint_sha256": "a3cafbde9d1ef67f7728c72d0fc9dfa4ff899f910c204377849044a3a178b440",
+      "predictions_sha256": "1e11c9be8f8e5331262df12abc706aedcb25d2777bec1253d4ac3ef2b8c0a2da"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficSH/staeformer_inductive/seed_2025",
+      "checkpoint_sha256": "33a08aff6fb785660c1268c656bc989274cbbdbf27e88b0291eb796385d607e6",
+      "predictions_sha256": "41a73b2a73f53516becb1b658a3ff69be5c1de5b24805624c11af0194abaca33"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficSH/staeformer_inductive/seed_42",
+      "checkpoint_sha256": "766798a54c9c9c048346e1ecbecdca13a34f9722b5a85546f49ef068332a5d4c",
+      "predictions_sha256": "c4d9b552d241dd99bb3a05b5a5e4063a3ab84cd4b31ff683a54fc9d2ddc22204"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficSH/uignn_inductive/seed_17",
+      "checkpoint_sha256": "7949f3552bc2a5ec16a5ac1ff160253a625b42f8ebf2524dca94d4ede12d16f6",
+      "predictions_sha256": "45cf22d0a05cc8f9fd793dfe1d60ac03d32efe3b9c1d1d72fda6f190366c4f02"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficSH/uignn_inductive/seed_2025",
+      "checkpoint_sha256": "64cddce0447afc519d0242e8bfe0c15a86f1af34c5e76667b47846cb19033be7",
+      "predictions_sha256": "08a16a3b6cdf93923ba4277ac4c24e9b0016d1b0a6dc54a6841febb7e13d1583"
+    },
+    {
+      "run": "outputs/studies/final_study/main/TrafficSH/uignn_inductive/seed_42",
+      "checkpoint_sha256": "eb5fc1441fd9af740bf90d625b912372bc605a8c052b24ca2ae4079816319c9a",
+      "predictions_sha256": "e0ccf28e2fbeac00f3ce02d0aa23ed1d188246830da3c4c9a822b3a433c4b7fc"
+    }
+  ]
+}

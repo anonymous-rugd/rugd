@@ -1,0 +1,73 @@
+project:
+  name: shiftguard_rugd
+  output_dir: outputs\studies\final_study\main
+  seeds:
+  - 17
+  - 42
+  - 2025
+data:
+  root: data/open_city/raw
+  cities:
+  - TrafficCD
+  - TrafficHZ
+  - TrafficSH
+  target_city: TrafficSH
+  history_steps: 12
+  horizon_steps: 1
+  interval_minutes: 30
+  start_timestamp: 2022-03-07T18:00
+  missing_value: 0.0
+  classical_train_cap: 300000
+split:
+  train_fraction: 0.65
+  calibration_fraction: 0.1
+  validation_fraction: 0.1
+  test_fraction: 0.15
+  embargo_steps: 12
+target:
+  severe_quantile: 0.1
+  warning_quantile: 0.3
+model:
+  hidden_dim: 64
+  dropout: 0.2532711887803548
+  diffusion_steps: 2
+  attention_heads: 4
+  attention_layers: 2
+  patch_length: 3
+training:
+  epochs: 35
+  time_batch_size: 24
+  transformer_time_batch_size: 24
+  lr: 0.0026510530443893993
+  weight_decay: 3.9113919043720124e-06
+  patience: 6
+  amp: true
+  grad_clip: 1.0
+  focal_gamma: 1.16665080126081
+  effective_beta: 0.9999
+  domain_weight: 0.1
+  evidence_kl_weight: 0.001
+  auxiliary_weight: 0.1
+  validation_missing_rate: 0.3
+  recovery_weight: 0.1
+  recovery_mask_rate: 0.2
+  selection_weights:
+    clean_macro: 0.4
+    clean_severe: 0.3
+    missing_macro: 0.15
+    missing_severe: 0.15
+evaluation:
+  ece_bins: 15
+  conformal_alpha: 0.1
+  bootstrap_repeats: 2000
+robustness:
+  missing_rates:
+  - 0.1
+  - 0.3
+  - 0.5
+  noise_std:
+  - 0.1
+  - 0.3
+  temporal_shifts:
+  - 1
+  - 2

@@ -1,0 +1,22 @@
+% Source: outputs/studies/final_study/main/results_all.csv, aggregated to
+% paper/figures/data/main_severe_auprc.csv (mean/sd per model, severe_auprc column).
+% Regenerate the aggregation with: python paper/figures/regenerate_figure_data.py
+\begin{tikzpicture}
+\begin{axis}[
+  xbar, y=6mm, enlarge y limits={abs=4mm},
+  xlabel={Severe-congestion AUPRC (mean $\pm$ SD, 9 city--seed runs)},
+  xmin=0, xmax=1.0,
+  symbolic y coords={Prior,Logistic,UIGNN-Inductive,Persistence,HGBDT,LightGBM,OpenCity-Scratch,GRU,Graph-GRU,STAEformer-Inductive,ShiftGuard-RUGD},
+  ytick=data,
+  nodes near coords, nodes near coords align={horizontal},
+  every node near coord/.append style={font=\tiny},
+  bar width=3.2mm,
+  width=\linewidth, height=6.2cm,
+  error bars/.cd, x dir=both, x explicit,
+  tick label style={font=\scriptsize},
+  label style={font=\scriptsize},
+]
+\addplot [fill=blue!55!black!25, draw=blue!55!black, error bar style={color=black}]
+  table [x=mean, y=label, x error=sd, col sep=comma] {figures/data/main_severe_auprc.csv};
+\end{axis}
+\end{tikzpicture}

@@ -1,0 +1,27 @@
+% Source: outputs/studies/final_study/main/TrafficCD/rugd/seed_17/predictions.npz, row-normalized
+% confusion matrix, exported to paper/figures/data/confusion_matrix.csv. This is the same run
+% selected by src/traffic_ml/opencity_reporting.py::create_report (first alphabetically/numerically
+% sorted rugd run). Regenerate with: python paper/figures/regenerate_figure_data.py
+\begin{tikzpicture}
+\begin{axis}[
+  width=6cm, height=6cm,
+  xlabel={Predicted label}, ylabel={True label},
+  xtick={0,1,2}, ytick={0,1,2},
+  xticklabels={normal,warning,severe},
+  yticklabels={normal,warning,severe},
+  tick label style={font=\scriptsize},
+  label style={font=\scriptsize},
+  % Defined inline rather than referencing a named built-in colormap (e.g. colormap/Blues),
+  % since that ColorBrewer-style name is not guaranteed to be bundled with every pgfplots
+  % installation -- an explicit two-stop colormap has no such dependency.
+  colormap={bluescale}{color=(white) color=(blue!70!black)},
+  colorbar,
+  colorbar style={font=\scriptsize},
+  point meta min=0, point meta max=1,
+  enlargelimits=false,
+  axis on top,
+]
+\addplot [matrix plot*, mesh/cols=3, mesh/ordering=rowwise, point meta=explicit]
+  table [x=x, y=y, meta=value, col sep=comma] {figures/data/confusion_matrix_grid.csv};
+\end{axis}
+\end{tikzpicture}

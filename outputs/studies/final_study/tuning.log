@@ -1,0 +1,44 @@
+2026-09-13 08:50:54 | INFO | STUDY final_study | equal-budget tuning | 12 searches x 20 trials
+2026-09-13 08:50:54 | INFO | [1/12] START | target=TrafficCD model=rugd
+2026-09-13 09:02:45 | INFO | [1/12] DONE  | target=TrafficCD model=rugd | 711.8s
+2026-09-13 09:02:45 | INFO | [1/12] PARAMS | {"auxiliary_weight": 0.1, "diffusion_steps": 2, "domain_weight": 0.03163748507988035, "dropout": 0.3254449109999697, "evidence_kl_weight": 0.0068714685079096375, "focal_gamma": 1.078125832377733, "hidden_dim": 64, "lr": 0.0011241201921851954, "weight_decay": 5.330999984461443e-05}
+2026-09-13 09:02:45 | INFO | [2/12] START | target=TrafficCD model=uignn_inductive
+2026-09-13 09:18:26 | INFO | [2/12] DONE  | target=TrafficCD model=uignn_inductive | 940.1s
+2026-09-13 09:18:26 | INFO | [2/12] PARAMS | {"diffusion_steps": 3, "dropout": 0.05256372781077482, "evidence_kl_weight": 0.0004723281133264738, "focal_gamma": 1.3669135553868548, "hidden_dim": 128, "lr": 0.002908504953551421, "recovery_mask_rate": 0.3, "recovery_weight": 0.25, "weight_decay": 3.935624072653475e-06}
+2026-09-13 09:18:26 | INFO | [3/12] START | target=TrafficCD model=staeformer_inductive
+2026-09-13 09:34:12 | INFO | STUDY final_study | equal-budget tuning | 6 searches x 20 trials
+2026-09-13 09:34:12 | INFO | [1/6] SKIP | target=TrafficCD model=rugd | frozen config exists
+2026-09-13 09:34:12 | INFO | [2/6] SKIP | target=TrafficCD model=uignn_inductive | frozen config exists
+2026-09-13 09:34:12 | INFO | [3/6] START | target=TrafficHZ model=rugd
+2026-09-13 09:48:00 | INFO | [3/6] DONE  | target=TrafficHZ model=rugd | 828.4s
+2026-09-13 09:48:00 | INFO | [3/6] PARAMS | {"auxiliary_weight": 0.05, "diffusion_steps": 2, "domain_weight": 0.016253934515115, "dropout": 0.24652811686422643, "evidence_kl_weight": 1.4646169322310115e-05, "focal_gamma": 1.2878078415506558, "hidden_dim": 48, "lr": 0.001692832570359962, "weight_decay": 1.8007488912122917e-05}
+2026-09-13 09:48:00 | INFO | [4/6] START | target=TrafficHZ model=uignn_inductive
+2026-09-13 10:03:27 | INFO | [4/6] DONE  | target=TrafficHZ model=uignn_inductive | 926.7s
+2026-09-13 10:03:27 | INFO | [4/6] PARAMS | {"diffusion_steps": 3, "dropout": 0.0543759483132501, "evidence_kl_weight": 3.10844411484524e-05, "focal_gamma": 1.785689508317912, "hidden_dim": 128, "lr": 0.002983442301189015, "recovery_mask_rate": 0.3, "recovery_weight": 0.1, "weight_decay": 8.480256621154375e-06}
+2026-09-13 10:03:27 | INFO | [5/6] START | target=TrafficSH model=rugd
+2026-09-13 10:15:16 | INFO | [5/6] DONE  | target=TrafficSH model=rugd | 709.0s
+2026-09-13 10:15:16 | INFO | [5/6] PARAMS | {"auxiliary_weight": 0.05, "diffusion_steps": 2, "domain_weight": 0.016253934515115, "dropout": 0.24652811686422643, "evidence_kl_weight": 1.4646169322310115e-05, "focal_gamma": 1.2878078415506558, "hidden_dim": 48, "lr": 0.001692832570359962, "weight_decay": 1.8007488912122917e-05}
+2026-09-13 10:15:16 | INFO | [6/6] START | target=TrafficSH model=uignn_inductive
+2026-09-13 10:29:33 | INFO | [6/6] DONE  | target=TrafficSH model=uignn_inductive | 857.1s
+2026-09-13 10:29:33 | INFO | [6/6] PARAMS | {"diffusion_steps": 3, "dropout": 0.10294029231130869, "evidence_kl_weight": 0.00015858518163241626, "focal_gamma": 1.9857676334684538, "hidden_dim": 128, "lr": 0.002982879499875662, "recovery_mask_rate": 0.3, "recovery_weight": 0.1, "weight_decay": 1.2049770238412215e-05}
+2026-09-13 10:29:33 | INFO | COMPLETE | tuning elapsed 55.4 minutes | configs=outputs\studies\final_study\configs
+2026-09-13 10:29:35 | INFO | STUDY final_study | equal-budget tuning | 6 searches x 8 trials
+2026-09-13 10:29:35 | INFO | [1/6] START | target=TrafficCD model=staeformer_inductive
+2026-09-13 11:34:49 | INFO | [1/6] DONE  | target=TrafficCD model=staeformer_inductive | 3913.8s
+2026-09-13 11:34:49 | INFO | [1/6] PARAMS | {"dropout": 0.3015716291285521, "focal_gamma": 1.267891335151586, "hidden_dim": 96, "lr": 0.0014981114715664277, "weight_decay": 0.0004604781799026819}
+2026-09-13 11:34:49 | INFO | [2/6] START | target=TrafficCD model=opencity_scratch
+2026-09-13 11:45:12 | INFO | [2/6] DONE  | target=TrafficCD model=opencity_scratch | 623.6s
+2026-09-13 11:45:12 | INFO | [2/6] PARAMS | {"dropout": 0.3015716291285521, "focal_gamma": 1.267891335151586, "hidden_dim": 96, "lr": 0.0014981114715664277, "weight_decay": 0.0004604781799026819}
+2026-09-13 11:45:12 | INFO | [3/6] START | target=TrafficHZ model=staeformer_inductive
+2026-09-13 13:02:12 | INFO | [3/6] DONE  | target=TrafficHZ model=staeformer_inductive | 4619.9s
+2026-09-13 13:02:12 | INFO | [3/6] PARAMS | {"dropout": 0.2532711887803548, "focal_gamma": 1.16665080126081, "hidden_dim": 64, "lr": 0.0026510530443893993, "weight_decay": 3.9113919043720124e-06}
+2026-09-13 13:02:12 | INFO | [4/6] START | target=TrafficHZ model=opencity_scratch
+2026-09-13 13:14:13 | INFO | [4/6] DONE  | target=TrafficHZ model=opencity_scratch | 720.2s
+2026-09-13 13:14:13 | INFO | [4/6] PARAMS | {"dropout": 0.2532711887803548, "focal_gamma": 1.16665080126081, "hidden_dim": 64, "lr": 0.0026510530443893993, "weight_decay": 3.9113919043720124e-06}
+2026-09-13 13:14:13 | INFO | [5/6] START | target=TrafficSH model=staeformer_inductive
+2026-09-13 14:02:14 | INFO | [5/6] DONE  | target=TrafficSH model=staeformer_inductive | 2880.9s
+2026-09-13 14:02:14 | INFO | [5/6] PARAMS | {"dropout": 0.2532711887803548, "focal_gamma": 1.16665080126081, "hidden_dim": 64, "lr": 0.0026510530443893993, "weight_decay": 3.9113919043720124e-06}
+2026-09-13 14:02:14 | INFO | [6/6] START | target=TrafficSH model=opencity_scratch
+2026-09-13 14:11:33 | INFO | [6/6] DONE  | target=TrafficSH model=opencity_scratch | 561.5s
+2026-09-13 14:11:33 | INFO | [6/6] PARAMS | {"dropout": 0.2532711887803548, "focal_gamma": 1.16665080126081, "hidden_dim": 64, "lr": 0.0026510530443893993, "weight_decay": 3.9113919043720124e-06}
+2026-09-13 14:11:33 | INFO | COMPLETE | tuning elapsed 222.0 minutes | configs=outputs\studies\final_study\configs

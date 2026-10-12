@@ -1,0 +1,87 @@
+\documentclass{article}
+
+% ---------------------------------------------------------------------------
+% Style file: prefer the REAL official ICLR 2027 style if it has been placed
+% in this directory; otherwise fall back to a clearly-labeled placeholder
+% (see iclr2027_fallback_shim.sty for why -- this sandbox has no general
+% internet access and the real file could not be fetched or verified).
+% No edits are needed here once the real .sty/.bst are added: just drop them
+% into paper/ as iclr2027_conference.sty / iclr2027_conference.bst.
+% ---------------------------------------------------------------------------
+\usepackage{iftex}
+\newif\ifhasrealstyle
+\IfFileExists{iclr2027_conference.sty}{\hasrealstyletrue}{\hasrealstylefalse}
+\ifhasrealstyle
+  \usepackage{iclr2027_conference}
+\else
+  \usepackage{iclr2027_fallback_shim}
+\fi
+
+% \iclrfinalcopy is intentionally NEVER invoked -- double-blind stays on.
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{pifont}
+% Only the architecture diagram (figures/architecture.tex) is still live TikZ -- every other
+% figure is a pre-rendered vector PDF (paper/figures/render_figures.py) placed via
+% \includegraphics, specifically to keep Overleaf's per-pass compile time low (cleveref/
+% hyperref/xr-hyper/natbib require 3-4 full recompiles, and re-executing PGFPlots from source
+% on every one of those passes was the dominant cost). pgfplots/pgfplotstable/groupplots are
+% therefore not loaded here at all.
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,matrix,calc}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{natbib}
+\IfFileExists{iclr2027_conference.bst}{\bibliographystyle{iclr2027_conference}}{\bibliographystyle{plainnat}}
+
+\usepackage[
+  pdftitle={Domain-Aligned Compact Graph Diffusion for Zero-Shot Cross-City Severe-Congestion Classification},
+  pdfauthor={},
+  pdfsubject={},
+  pdfkeywords={},
+  pdfcreator={},
+  pdfproducer={},
+  colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue,
+]{hyperref}
+
+% cleveref must load after hyperref (and is conventionally loaded last of all packages).
+\usepackage[capitalize,noabbrev]{cleveref}
+
+\newcommand{\methodname}{ShiftGuard-RUGD}
+
+\title{Domain-Aligned Compact Graph Diffusion for Zero-Shot \\ Cross-City Severe-Congestion Classification}
+\author{Anonymous authors \\ Paper under double-blind review}
+\date{}
+
+\begin{document}
+\maketitle
+
+\ifhasrealstyle\else\PLACEHOLDERBANNER\fi
+
+\input{sections/abstract.tex}
+
+\input{sections/introduction.tex}
+\input{sections/related_work.tex}
+\input{sections/method.tex}
+\input{sections/experimental_setup.tex}
+\input{sections/results.tex}
+\input{sections/analysis.tex}
+\input{sections/limitations.tex}
+\input{sections/conclusion.tex}
+
+\input{sections/ethics_statement.tex}
+\input{sections/reproducibility_statement.tex}
+
+\bibliography{refs}
+
+\newpage
+\appendix
+\input{sections/appendix.tex}
+
+\end{document}

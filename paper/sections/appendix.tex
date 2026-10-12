@@ -1,0 +1,295 @@
+\section{Full Experimental Detail}
+\label{app:hyperparameters}
+
+\Cref{tab:search-space} gives the Optuna search space for every tunable hyperparameter
+(\texttt{src/traffic\_ml/opencity\_tuning.py::tune\_source\_validation}). All four tuned models
+share \texttt{hidden\_dim}, \texttt{dropout}, \texttt{lr}, \texttt{weight\_decay}, and
+\texttt{focal\_gamma}; \texttt{diffusion\_steps} is additionally tuned for
+\texttt{graph\_gru}/\texttt{rugd}/\texttt{uignn\_inductive}; RUGD additionally tunes
+\texttt{domain\_weight}, \texttt{evidence\_kl\_weight}, and \texttt{auxiliary\_weight}; UIGNN
+additionally tunes \texttt{evidence\_kl\_weight}, \texttt{recovery\_weight}, and
+\texttt{recovery\_mask\_rate}. The selection objective and per-model trial budgets are summarized in
+\Cref{sec:setup}; the exact formula is
+\[
+  \mathrm{score} = 0.40\cdot(\text{clean macro-F1}) + 0.30\cdot(\text{clean severe AUPRC})
+  + 0.15\cdot(\text{30\%-missing macro-F1}) + 0.15\cdot(\text{30\%-missing severe AUPRC}),
+\]
+computed per source city and averaged. As disclosed there, GRU and Graph-GRU were not tuned within
+this study's logged pipeline (\Cref{sec:limitations}); their final configurations are
+architecture-matched fixed values, not independently searched ones.
+
+\begin{table}[h]
+\centering
+\caption{Optuna search space. Source: \texttt{src/traffic\_ml/opencity\_tuning.py}, lines 34--54.}
+\label{tab:search-space}
+\begin{tabular}{lll}
+\toprule
+Hyperparameter & Range & Models \\
+\midrule
+\texttt{hidden\_dim} & $\{48, 64, 96, 128\}$ (categorical) & all tuned \\
+\texttt{dropout} & $[0.05, 0.4]$ (uniform) & all tuned \\
+\texttt{diffusion\_steps} & $\{1,2,3\}$ (int) & graph\_gru, rugd, uignn\_inductive \\
+\texttt{lr} & $[2\times10^{-4}, 3\times10^{-3}]$ (log-uniform) & all tuned \\
+\texttt{weight\_decay} & $[10^{-6}, 10^{-3}]$ (log-uniform) & all tuned \\
+\texttt{focal\_gamma} & $[1.0, 3.0]$ (uniform) & all tuned \\
+\texttt{domain\_weight} & $[0.01, 0.25]$ (log-uniform) & rugd \\
+\texttt{evidence\_kl\_weight} & $[10^{-5}, 10^{-2}]$ (log-uniform) & rugd, uignn\_inductive \\
+\texttt{auxiliary\_weight} & $\{0.05, 0.10, 0.20\}$ (categorical) & rugd \\
+\texttt{recovery\_weight} & $\{0.05, 0.10, 0.25\}$ (categorical) & uignn\_inductive \\
+\texttt{recovery\_mask\_rate} & $\{0.10, 0.20, 0.30\}$ (categorical) & uignn\_inductive \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Fixed training settings, all models: history length 12 bins, horizon 1 bin, 30-minute interval,
+12-bin embargo, up to 35 epochs with patience 6, mixed precision, gradient clipping at 1.0, batch
+size 12 timestamps (24 for Transformer-class tuning). Each target test partition has 197 usable
+timestamp blocks per fold.
+
+\section{Complete Results}
+\label{app:complete-results}
+
+\input{tables/full_metrics.tex}
+
+\subsection{Full robustness table}
+\label{app:robustness-full}
+\input{tables/full_robustness.tex}
+
+\subsection{Calibration and efficiency, full}
+\label{app:calibration}
+\label{app:efficiency}
+\input{tables/calibration_full.tex}
+\input{tables/diagnostics.tex}
+\input{tables/efficiency.tex}
+
+\subsection{Paired missingness inference}
+\label{app:paired-inference}
+\input{tables/paired_inference.tex}
+Against GRU, UIGNN, and OpenCity-Scratch, \methodname{}'s missingness advantage is large and
+consistent across the nine paired city--seed comparisons (rank-biserial $=1.0$ at both severities
+for GRU and OpenCity-Scratch). After Holm correction over learned baselines, these land at
+$p_H=0.0625$ rather than below 0.05, because an exact test over nine pairs is mechanically bounded
+at that resolution -- we report the uncorrected $p=0.0039$ alongside $p_H$ rather than letting the
+smaller number imply more precision than nine pairs can support. \methodname{} trails
+STAEformer-Inductive at both severities; those differences are negative and not significant after
+correction. Collapsing seeds to three city-level means gives a minimum attainable two-sided
+sign-flip $p=0.25$, so no city-level/geographic significance is established (\Cref{sec:setup}).
+
+\section{Why Each Result Came Out As It Did}
+\label{app:why}
+
+\textbf{Why domain alignment dominates the ablation (\Cref{tab:ablation}).} The gradient-reversal
+discriminator is the only mechanism in the architecture whose training signal is explicitly a
+function of \emph{which source city} a representation came from; removing it leaves the
+representation free to encode source-city-specific structure, which the model can exploit on
+source validation but which does not transfer to a structurally different graph. Graph diffusion
+and topology features matter for representing the target graph's own structure at inference time,
+but neither is optimized against a cross-city-invariance objective, which plausibly explains why
+their ablation effect is real but an order of magnitude smaller. This mechanism would not hold if
+the held-out city's road network topology were similar enough to the source cities' that
+source-specific structure transferred incidentally -- a condition we cannot rule out with three
+cities, but which the TrafficCD near-tie (\Cref{tab:percity}) is at least consistent with
+(TrafficCD's degree distribution is the closest to one of the source pairs in any given fold; a
+full topological-similarity analysis is future work, not performed here).
+
+\textbf{Why \methodname{} trails STAEformer under heavy missingness (\Cref{tab:robustness}).}
+STAEformer's self-attention integrates information across the full 12-step temporal window in one
+operation; \methodname{}'s GRU processes history sequentially and its diffusion step only mixes
+\emph{current}, already-degraded hidden states across space. When 30--50\% of observations are
+independently masked, a model that can attend directly to distant, unmasked timesteps has more
+raw signal available per prediction than one relying on a compressed sequential state plus
+spatial mixing of already-degraded states. This is a plausible, mechanism-consistent explanation,
+not one isolated by a controlled ablation in this study (a wider-receptive-field variant of
+\methodname{} would be the direct test, and is not part of this study's 7 registered ablations).
+
+\textbf{Why the evidential KL asymmetry does not affect headline accuracy.} See \Cref{sec:analysis}
+-- final classification is $\arg\max$ over the Dirichlet expectation, which depends on the full
+concentration vector regardless of which terms the KL regularizer penalizes; the asymmetry affects
+\emph{how well vacuity tracks error}, not \emph{which class is predicted}.
+
+\section{Extended Comparisons}
+\label{app:extended}
+
+\subsection{Full literature scope comparison}
+\label{app:literature-scope}
+
+\Cref{tab:literature-scope} tabulates the scope claim from \Cref{sec:related} against all 19
+audited 2021--2025(-2025) papers on six protocol dimensions. No single audited paper combines
+more than two of the six; the joint combination is the specific, checkable gap this paper's
+protocol fills.
+
+\input{tables/literature_scope.tex}
+
+\subsection{Per-city breakdown}
+\label{app:percity-detail}
+
+\input{tables/percity.tex}
+
+\subsection{Per-corruption robustness}
+\label{app:robustness-detail}
+
+\Cref{tab:full-robustness} (\Cref{app:robustness-full}) gives every registered model at every
+corruption severity, not only the 30\%/50\%-missing focus of the main body. Reading across rows:
+the non-learned \texttt{prior} baseline is flat by construction (it ignores input, so every
+corruption is a no-op for it) and is the correct sanity floor for interpreting any other model's
+degradation curve. \texttt{persistence} degrades steeply under missingness (its only signal is the
+literal last observed reading) but is comparatively robust to noise and shift, since a systematic
+offset preserves relative ordering better than a missing reading does. Classical models
+(\texttt{hist\_gbdt}, \texttt{lightgbm}) degrade similarly to each other across every condition,
+consistent with both consuming the same flattened feature representation. Among neural models,
+the ranking under noise and shift is close and no single model dominates every cell -- this is
+visible directly in \Cref{tab:full-robustness} and is the basis for \Cref{sec:results-robustness}'s
+"no method dominates every metric" claim under those two corruption families specifically (as
+opposed to missingness, where the ranking is consistent).
+
+\section{Negative Results and Failed Variants}
+\label{app:negative}
+
+Two of the seven ablated components are, on this three-city sample, negative results rather than
+load-bearing: removing class-balance weighting \emph{improves} clean severe AUPRC by 0.11 points
+and removing evidential supervision improves it by 0.09 points (both within one standard deviation
+of zero relative to the ablation SDs in \Cref{tab:ablation}, i.e., not distinguishable from noise
+at this sample size). We do not retract these components from the final architecture -- they were
+part of the frozen, promoted specification before this ablation was run, and removing them
+post-hoc because their marginal effect is small would be exactly the kind of target-blind but
+still ad-hoc architecture search this paper's protocol is designed to avoid. We instead report
+them plainly as weak or mixed evidence: focal modulation \emph{helps} clean AUPRC/NLL/ECE but very
+slightly \emph{hurts} mean robust AUPRC on removal, and class balance is similarly mixed. External-
+city validation is the correct way to determine whether these small, sample-noise-level effects
+are real and simply underpowered at $n=9$, or genuinely negligible.
+
+\section{Sensitivity Analysis}
+\label{app:sensitivity}
+
+Full Optuna trial records for the four tuned deep models are retained at
+\texttt{outputs/studies/final\_study/tuning/<city>/<model>/trials.csv} (12 completed searches:
+6$\times$20-trial for RUGD/UIGNN, 6$\times$8-trial for the two Transformer adaptations). We did not
+produce a marginal-effect-per-hyperparameter plot for this submission (it requires re-reading and
+aggregating 12 separate Optuna trial logs per hyperparameter, which was not completed in this
+session); the raw trial CSVs support this analysis directly if needed; e.g.\
+\texttt{pandas.read\_csv(...).sort\_values('value')} against each hyperparameter column gives a
+first-pass view per city/model.
+
+\section{Qualitative Examples}
+\label{app:qualitative}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.48\linewidth}
+  \centering\includegraphics[width=\linewidth]{figures/confusion_matrix.pdf}
+  \caption{Normalized confusion matrix, one registered \methodname{} run (TrafficCD, seed 17).}
+\end{subfigure}\hfill
+\begin{subfigure}{0.48\linewidth}
+  \centering\includegraphics[width=\linewidth]{figures/calibration_pr.pdf}
+  \caption{Severe-event calibration and PR curve, same run.}
+\end{subfigure}
+\caption{Qualitative diagnostics for one registered \methodname{} run. Source:
+\texttt{outputs/studies/final\_study/main/TrafficCD/rugd/seed\_17/predictions.npz}; rendered by
+\texttt{paper/figures/render\_figures.py}.}
+\label{fig:qualitative}
+\end{figure}
+
+\Cref{fig:qualitative} (\Cref{sec:results-calib-eff}) gives the confusion matrix and severe-event
+calibration/PR curves for one registered run (TrafficCD, seed 17). Errors concentrate between
+\emph{adjacent} severity classes (normal$\to$warning: 2.95\% of true-normal examples; warning
+$\to$severe and severe$\to$warning: 7.35\% and 16.47\% respectively) rather than the ordinally
+distant normal$\leftrightarrow$severe confusion (0.31\% and 5.32\%), consistent with the label
+space's ordinal structure even though the model is trained as an unordered 3-way classifier. We
+did not curate additional qualitative failure-case examples (e.g., specific mispredicted road
+segments or time windows) for this submission; the per-run \texttt{predictions.npz} files
+(\texttt{time\_ids}, \texttt{node\_ids} arrays) support this directly as a follow-up.
+
+\section{Derivations}
+\label{app:derivations}
+
+The Dirichlet-to-uniform KL divergence used in \Cref{eq:classification-loss}
+(\texttt{src/traffic\_ml/losses.py::dirichlet\_kl\_to\_uniform}) is the standard closed form for
+two Dirichlet distributions with concentration vectors $\boldsymbol\alpha,\boldsymbol\beta\in
+\mathbb{R}_{>0}^K$:
+\[
+\mathrm{KL}[\mathrm{Dir}(\boldsymbol\alpha)\|\mathrm{Dir}(\boldsymbol\beta)]
+= \log\frac{\Gamma(\sum_k\alpha_k)}{\Gamma(\sum_k\beta_k)} - \sum_k\log\frac{\Gamma(\alpha_k)}{\Gamma(\beta_k)}
++ \sum_k(\alpha_k-\beta_k)\big(\psi(\alpha_k)-\psi(\textstyle\sum_k\alpha_k)\big),
+\]
+with $\Gamma$ the gamma function and $\psi$ the digamma function; setting $\boldsymbol\beta=\mathbf 1$
+recovers the uniform-Dirichlet target used throughout. \Cref{sec:analysis}'s analysis concerns
+which entries of $\boldsymbol\alpha$ (equivalently $\tilde{\boldsymbol\alpha}$) are passed into this
+formula, not the formula itself, which is implemented correctly against its own definition.
+
+\section{Compute and Energy Reporting}
+\label{app:compute}
+
+Directly summing the \texttt{train\_seconds} and \texttt{inference\_seconds} columns across every
+retained run gives 5{,}970s (main-suite training, 99 runs) + 5{,}693s (ablation training, 63 runs)
++ 14s + 7s (inference) $=$ 11{,}684s $\approx$ 3.25 GPU-hours for all main-suite and ablation
+model-fit compute, plus 18{,}293s $\approx$ 5.08 GPU-hours for the 12 logged Optuna tuning searches
+(RUGD/UIGNN/STAEformer-Inductive/OpenCity-Scratch only) --
+\textbf{8.33 GPU-hours accounted for in total}, on one NVIDIA RTX 5080 (\texttt{environment.json}).
+This explicitly excludes GRU/Graph-GRU's earlier, unretained tuning-pass compute (\Cref{sec:setup},
+\Cref{sec:limitations}); we do not have a figure for that and do not estimate one. We did not
+measure or estimate carbon emissions for this study.
+
+\section{Reproducibility: Exact Commands}
+\label{app:regenerate}
+
+\begin{itemize}
+  \item Full study from scratch: \texttt{python scripts/run\_full\_pipeline.py --study-id
+        final\_reproduction --baseline-trials 30 --trials 20 --transformer-trials 8}
+        (\texttt{--resume} to continue an interrupted run without repeating completed work).
+  \item Verification before a long run: \texttt{python -m pytest -q} and
+        \texttt{python scripts/verify\_modern\_models.py --batch-size 12 --backward}.
+  \item Every number in every main-body and appendix table: \texttt{python
+        paper/tables/generate\_tables.py}, reading only from
+        \texttt{outputs/studies/final\_study/\{main,ablations\}/*.csv}.
+  \item The headline table's bootstrap confidence intervals (\Cref{tab:headline}), using the same
+        hierarchical city-then-seed bootstrap as every paired-comparison CI in this paper:
+        \texttt{python paper/tables/regenerate\_headline\_ci.py}.
+  \item Every figure's underlying data: \texttt{python
+        paper/figures/regenerate\_figure\_data.py}.
+  \item The Markdown results report this paper's numbers were cross-checked against:
+        \texttt{python scripts/export\_results\_report.py} $\to$ \texttt{docs/FINAL\_RESULTS.md}.
+\end{itemize}
+
+\section{Material Relocated from the Prior Draft}
+\label{app:relocated}
+
+An earlier internal draft of this paper (never submitted; see the accompanying \texttt{
+DRAFT\_TRIAGE.md} audit) contained the same core results reported here, independently re-verified
+against the raw per-run CSVs during this revision (zero numeric discrepancies found). Two changes
+from that draft are worth recording explicitly: (1) two subsections in that draft
+("per-city ablations," "complete metric breakdown") consisted of a bare table with no interpretive
+prose; the corresponding tables here (\Cref{tab:full-metrics}, and the per-city ablation numbers
+folded into \Cref{app:complete-results}) are accompanied by explicit takeaways, per this paper's
+own "never a table without a takeaway" standard; (2) that draft's architecture figure
+(\Cref{fig:architecture}'s predecessor) was a raster illustration with decorative city-skyline
+icons and no tensor-shape labels; \Cref{app:figure-redesign} documents the redesign.
+
+\subsection{Figure redesign notes}
+\label{app:figure-redesign}
+
+The prior draft's Figure 1 used gradient-shaded blobs, decorative city-skyline icons, and
+color-only encoding of block type, with no arrow-level tensor shapes and no notation tying it to
+the Method section's equations. \Cref{fig:architecture} instead: (1) labels every block with the
+paper's own symbols ($h_i$, $m_i$, $s_i$, $z_i$, $\alpha_i$) rather than icons; (2) annotates the
+two main data-flow arrows with the fused/diffused representation symbols; (3) distinguishes
+inference-path (solid) from training-only paths (dashed), a shape-redundant encoding (not
+color-only) for colorblind accessibility, with the exact key given in the caption; (4) uses a
+fixed, colorblind-safe palette defined locally in the figure source; (5) is pure vector TikZ with
+no embedded raster content, compiling directly from \texttt{paper/figures/architecture.tex} via
+\texttt{main.tex}.
+
+This went through two internal revisions before the one in the main text. The first used
+TikZ's \texttt{positioning} library (chained \texttt{right=X of Y} / \texttt{above right=X and Y
+of Z} placements) rather than fixed coordinates; two independent chains that shared an anchor
+node compounded their relative offsets unpredictably once rendered at full size, producing a
+visible overlap between the local-evidential-head box and the diffusion block, and the legend
+was built from a \texttt{matrix} of nested \texttt{\textbackslash tikz\{...\}} mini-pictures,
+which is invalid outside an active \texttt{tikzpicture} context and caused a
+"TeX capacity exceeded" runaway-expansion compile error. The second revision fixed both with
+absolute coordinates and a legend built from plain nodes in the outer picture, but its natural
+bounding box was roughly $26\times20$\,cm; scaling that down to the page width via
+\texttt{\textbackslash resizebox} would have shrunk the font by the same factor as everything
+else, past the point of legibility. The version in the main text compacts the coordinate grid to
+roughly $19\times10.5$\,cm and moves the legend into the caption rather than drawing it in the
+figure, which removes both the size problem and the class of nested-node risk that caused the
+first revision's compile error, rather than only patching that one instance of it.

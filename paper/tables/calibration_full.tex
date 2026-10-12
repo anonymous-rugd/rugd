@@ -1,0 +1,19 @@
+% Source: outputs/studies/final_study/main/results_all.csv, neural models only.
+% Regenerate with: python paper/tables/generate_tables.py
+\begin{table}[t]
+\centering
+\caption{Neural probabilistic quality and APS behavior over nine runs. Coverage target 0.90.}
+\label{tab:calibration-full}
+\begin{tabular}{lccccc}
+\toprule
+Method & NLL $\downarrow$ & Brier $\downarrow$ & ECE $\downarrow$ & APS coverage & Set size $\downarrow$ \\
+\midrule
+GRU & 0.2735$\pm$0.0473 & 0.1580$\pm$0.0290 & 0.0067$\pm$0.0040 & 0.9993$\pm$0.0003 & 2.2444$\pm$0.0584 \\
+Graph-GRU & 0.2789$\pm$0.0574 & 0.1595$\pm$0.0348 & 0.0114$\pm$0.0064 & 0.9990$\pm$0.0004 & 2.2232$\pm$0.0738 \\
+UIGNN-Inductive & 0.2991$\pm$0.0511 & 0.1683$\pm$0.0302 & 0.0060$\pm$0.0016 & 0.9987$\pm$0.0004 & 2.2700$\pm$0.0874 \\
+STAEformer-Inductive & 0.2681$\pm$0.0455 & 0.1557$\pm$0.0281 & 0.0055$\pm$0.0016 & 0.9997$\pm$0.0001 & 2.3461$\pm$0.0886 \\
+OpenCity-Scratch & 0.2770$\pm$0.0493 & 0.1604$\pm$0.0300 & 0.0065$\pm$0.0011 & 0.9994$\pm$0.0002 & 2.2735$\pm$0.0633 \\
+\textbf{ShiftGuard-RUGD} & 0.2625$\pm$0.0427 & 0.1508$\pm$0.0270 & 0.0066$\pm$0.0024 & 0.9984$\pm$0.0003 & 2.1552$\pm$0.0834 \\
+\bottomrule
+\end{tabular}
+\end{table}

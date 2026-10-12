@@ -1,0 +1,25 @@
+% Source: outputs/studies/final_study/main/results_all.csv, all 11 models, mean over 9 runs.
+% Regenerate with: python paper/tables/generate_tables.py
+\begin{table}[t]
+\centering
+\caption{All registered clean classification/ranking metrics, mean over nine runs (SD omitted for width; see \Cref{tab:headline} for SD on the two primary metrics). P/R/F1 denote severe-class precision, recall, F1.}
+\label{tab:full-metrics}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lcccccccc}
+\toprule
+Method & Accuracy & Balanced acc. & Macro-F1 & Severe P & Severe R & Severe F1 & AUPRC & AUROC \\
+\midrule
+\textbf{ShiftGuard-RUGD} & 0.8938 & 0.8324 & 0.8381 & 0.8104 & 0.7876 & 0.7987 & 0.8883 & 0.9806 \\
+STAEformer-Inductive & 0.8898 & 0.8222 & 0.8302 & 0.8178 & 0.7525 & 0.7825 & 0.8815 & 0.9809 \\
+Graph-GRU & 0.8883 & 0.8207 & 0.8298 & 0.8091 & 0.7731 & 0.7896 & 0.8785 & 0.9797 \\
+GRU & 0.8888 & 0.8154 & 0.8282 & 0.8133 & 0.7680 & 0.7896 & 0.8799 & 0.9805 \\
+OpenCity-Scratch & 0.8872 & 0.8199 & 0.8280 & 0.8133 & 0.7632 & 0.7868 & 0.8770 & 0.9800 \\
+LightGBM & 0.8753 & 0.8448 & 0.8210 & 0.7287 & 0.8430 & 0.7816 & 0.8775 & 0.9800 \\
+HGBDT & 0.8736 & 0.8457 & 0.8192 & 0.7208 & 0.8491 & 0.7795 & 0.8765 & 0.9798 \\
+Persistence & 0.8793 & 0.8182 & 0.8186 & 0.7782 & 0.7735 & 0.7759 & 0.6270 & 0.8737 \\
+UIGNN-Inductive & 0.8819 & 0.8069 & 0.8179 & 0.8123 & 0.7317 & 0.7692 & 0.8568 & 0.9751 \\
+Logistic & 0.8362 & 0.8169 & 0.7841 & 0.7169 & 0.8020 & 0.7570 & 0.7972 & 0.9641 \\
+Prior & 0.6636 & 0.3333 & 0.2642 & 0.0000 & 0.0000 & 0.0000 & 0.1117 & 0.5000 \\
+\bottomrule
+\end{tabular}}
+\end{table}

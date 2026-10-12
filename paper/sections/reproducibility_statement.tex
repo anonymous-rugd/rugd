@@ -1,0 +1,37 @@
+\section*{Reproducibility Statement}
+\addcontentsline{toc}{section}{Reproducibility Statement}
+
+Every registered run stores a resolved configuration, exact seed, environment metadata (Python
+3.12.10, PyTorch 2.11.0+cu128, CUDA 12.8, one NVIDIA RTX 5080), source-only normalization/threshold
+statistics, model checkpoint, predictions, and per-run metrics
+(\texttt{outputs/studies/final\_study/**/provenance.json}); a SHA-256 manifest hashes every
+retained checkpoint and prediction file for the four hashed neural models (36 records; one hash was
+independently spot-verified against the corresponding file on disk while preparing this paper).
+\textbf{Caveat}: the git commit hash recorded in each run's provenance does not match this public
+repository's own history (which was released as a single squashed commit), because these runs were
+produced in an earlier private development repository before this public release -- we disclose
+this rather than imply exact-commit reproducibility that the public repository cannot actually
+support; the checkpoint/prediction hash manifest is the independently verifiable alternative.
+
+\textbf{Full hyperparameter detail} (search ranges, selection objective, and every tuned run's
+resolved values) is in \Cref{app:hyperparameters}; \textbf{compute accounting} is in
+\Cref{app:compute}, where we report 8.33 accounted GPU-hours across main-suite training/inference
+and the four Optuna-tuned models' search trials, and explicitly note that GRU/Graph-GRU's earlier
+tuning-pass compute is not accounted for in this repository (consistent with the tuning-budget
+disclosure in \Cref{sec:setup}); \textbf{every command that regenerates every number and figure in
+this paper} is in \Cref{app:regenerate}, including \texttt{paper/tables/generate\_tables.py} and
+\texttt{paper/figures/regenerate\_figure\_data.py}, both of which read exclusively from the
+retained CSV/NPZ artifacts and were used to produce every table body and figure data file in this
+submission.
+
+\textbf{Dataset licensing.} The OpenCity dataset is hosted at
+\texttt{huggingface.co/datasets/hkuds/OpenCity-dataset}; we were unable to independently confirm
+its exact license terms from within this paper's preparation environment (no general internet
+access) beyond secondary, unverified reports that the associated GitHub repository is MIT-licensed.
+We flag this as an open item requiring direct confirmation from the dataset host before
+camera-ready, rather than asserting a license we could not verify against a primary source.
+
+The complete pipeline (\texttt{scripts/run\_full\_pipeline.py}) is a single resumable command that
+performs source-only tuning, three-seed evaluation, robustness/calibration analysis, RUGD
+ablations, statistical inference, plotting, and report generation, and does not repeat completed
+work on interruption.

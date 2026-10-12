@@ -1,0 +1,11 @@
+{
+  "hidden_dim": 128,
+  "dropout": 0.05256372781077482,
+  "diffusion_steps": 3,
+  "lr": 0.002908504953551421,
+  "weight_decay": 3.935624072653475e-06,
+  "focal_gamma": 1.3669135553868548,
+  "evidence_kl_weight": 0.0004723281133264738,
+  "recovery_weight": 0.25,
+  "recovery_mask_rate": 0.3
+}

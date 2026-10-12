@@ -1,0 +1,53 @@
+\section{Related Work}
+\label{sec:related}
+
+\paragraph{Spatiotemporal traffic models.} PDFormer models propagation delay and long-range
+dependence \citep{jiang2023pdformer}; STAEformer shows that adaptive spatiotemporal embeddings make
+a vanilla Transformer state-of-the-art \citep{liu2023staeformer}; TESTAM routes recurring and
+non-recurring traffic through a mixture of experts \citep{lee2024testam}; and STID shows that simple
+spatial/temporal identity embeddings are a strong, efficient baseline \citep{shao2022stid}, while
+STEP augments graph forecasters with masked long-history pretraining \citep{shao2022step}. All
+forecast continuous traffic variables within a fixed, previously-seen sensor network. Critically,
+identity embeddings indexed by node or dataset -- central to STAEformer, STID, and most of this
+family -- are not defined on a graph with an unseen node count; our ID-free encoder instead
+conditions on shared history, calendar, and topology features that exist identically in any city.
+
+\paragraph{Transfer and foundation models.} Traffic4Cast evaluates few-shot spatial transfer and
+pandemic-era temporal shift \citep{eichenberger2022traffic4cast21,neun2022traffic4cast22}.
+CrossTReS reweights source-city regions via domain adaptation and joint meta-learning, but its
+protocol uses target data and fine-tuning \citep{jin2022crosstres}; SFMGTL uses semantic
+multi-granularity transfer \citep{chen2024sfmgtl}; and SCPT learns representations for unseen roads
+but assumes short target-road histories at inference \citep{prabowo2024scpt}. UniST combines
+multi-scenario pretraining with knowledge-guided prompts \citep{yuan2024unist}; OpenCity pretrains
+graph--Transformer blocks over heterogeneous traffic data for zero-shot forecasting
+\citep{li2025opencity}. STONE studies joint structural/temporal out-of-distribution generalization
+\citep{wang2024stone}, and a graphon-mixture approach targets cross-year spatial shift
+\citep{wang2024spatialshift}. Our held-out city is excluded from training, label construction,
+selection, and calibration, and the prediction target is rare-state classification, not continuous
+regression -- a stricter and operationally different endpoint from any of the above.
+
+\paragraph{Uncertainty and missing data.} DeepSTUQ unifies several uncertainty sources with
+temperature-scaling calibration \citep{qian2022deepstuq}; UIGNN combines inductive prediction at
+unobserved locations with uncertainty \citep{mei2023uignn}; STUP modulates propagation with
+uncertainty \citep{jin2024stup}; scalable deep ensembles decompose uncertainty in graph forecasting
+\citep{mallick2024ensemble}; and, most recently, UQGNN couples an interaction-aware spatiotemporal
+embedding with a probabilistic prediction head evaluated on three in-network cities
+\citep{yu2025uqgnn}. None of these evaluates uncertainty under leave-one-city-out transfer. Neither
+evidential learning nor uncertainty-aware traffic modeling is claimed as new here; our contribution
+is protocol-level -- source-only probabilistic calibration and conformal prediction sets evaluated
+jointly with rare-event ranking and explicit test-time corruptions -- and, in \Cref{sec:analysis}, a
+specific mechanistic diagnosis of where the evidential formulation's uncertainty quality breaks down.
+
+\paragraph{Precise novelty boundary.} \methodname{} does not claim to invent recurrent encoding,
+graph message passing, domain-adversarial training \citep{ganin2015dann}, Dirichlet evidential
+heads \citep{sensoy2018evidential}, effective-number class weighting \citep{cui2019effectivenumber},
+or conformal prediction \citep{angelopoulos2021gentle} in isolation. Its contribution is a specific
+compact composition for a stricter operating point -- ID-free shared encoding permits unseen graph
+sizes; degree normalization makes transport insensitive to city-specific node degree; local and
+final evidential objectives supervise rare-class evidence before and after propagation; and
+source-city adversarial training discourages source-specific representations -- combined with an
+ablation that attributes the resulting transfer behavior to a specific one of these components
+rather than to the composition as an undifferentiated whole. \Cref{app:literature-scope} tabulates
+this scope claim directly against all 19 audited papers on six protocol dimensions (zero-shot
+city transfer, rare/severe focus, predictive uncertainty, shift stress, conformal prediction,
+efficiency focus); none combines more than two.

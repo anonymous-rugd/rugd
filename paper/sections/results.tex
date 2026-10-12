@@ -1,0 +1,98 @@
+\section{Results}
+\label{sec:results}
+
+\subsection{Clean zero-shot performance}
+\label{sec:results-clean}
+
+\input{tables/headline.tex}
+
+\methodname{} leads the complete 11-model suite on both primary metrics
+(\Cref{tab:headline}): macro-F1 0.8381$\pm$0.0112, 0.79 points above STAEformer-Inductive, and
+severe AUPRC 0.8883$\pm$0.0310, 0.68 points above it. It also has the best mean NLL. \textbf{The
+95\% hierarchical city-then-seed bootstrap intervals on both primary metrics overlap
+STAEformer-Inductive's} -- macro-F1 [0.8271, 0.8523] vs.\ [0.8137, 0.8427]; severe AUPRC
+[0.8589, 0.9281] vs.\ [0.8418, 0.9257] -- so we
+present the leaderboard position as a real but not dominant point estimate, not as a
+statistically separated win in isolation; \Cref{sec:ablations} gives the more specific,
+mechanism-level claim this paper leads with. \Cref{fig:main-auprc} shows the full ranking.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\linewidth]{figures/main_severe_auprc.pdf}
+\caption{Severe-congestion AUPRC across all 11 compared models, mean $\pm$ SD over nine
+city--seed runs. Source: \texttt{outputs/studies/final\_study/main/results\_all.csv}; rendered by
+\texttt{paper/figures/render\_figures.py} from \texttt{paper/figures/data/main\_severe\_auprc.csv}.}
+\label{fig:main-auprc}
+\end{figure}
+
+\subsection{Robustness under distribution shift}
+\label{sec:results-robustness}
+
+\input{tables/robustness.tex}
+
+Missing sensors expose \methodname{}'s clearest limitation: STAEformer-Inductive ranks first at
+both 30\% and 50\% masking (\Cref{tab:robustness}), while \methodname{} is second, exceeding every
+other learned baseline by a wide margin (e.g., +5.30 and +18.20 points over Graph-GRU at 30\%/50\%).
+Under strong measurement noise and temporal shift, rankings are closer and no method dominates
+every metric (\Cref{fig:robustness}; full seven-condition table in \Cref{app:robustness-full}).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/robustness.pdf}
+\caption{Severe AUPRC across all registered corruption severities for a six-model focus set.
+Source: \texttt{outputs/studies/final\_study/main/robustness\_all.csv}; rendered by
+\texttt{paper/figures/render\_figures.py}.}
+\label{fig:robustness}
+\end{figure}
+
+\subsection{Component ablations localize the transfer mechanism}
+\label{sec:ablations}
+
+\input{tables/ablation.tex}
+
+\Cref{tab:ablation} and \Cref{fig:ablation-waterfall} give this paper's central, falsifiable
+claim: removing domain-adversarial source alignment costs 3.44 severe-AUPRC points -- roughly
+$4\times$ the next-largest component effect (graph diffusion, 0.88 points; transferable topology,
+0.97 points) and roughly $30\times$ the two rare-event-specific mechanisms (class balancing,
+$-0.11$ points; evidential supervision, $-0.09$ points, both within noise of zero). This is not
+distributed credit across the architecture: the mechanism doing the heavy lifting for zero-shot
+transfer specifically is the explicit cross-city domain-invariance pressure, not the spatial
+diffusion or the rare-event machinery, both of which matter far more modestly. Class-balance and
+evidential-head removals are, on this three-city sample, negative results -- essentially
+noise-level -- and we report them as such rather than retrofit a story where every component
+contributes comparably.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\linewidth]{figures/ablation_waterfall.pdf}
+\caption{Clean severe-AUPRC change from removing each component, full \methodname{} as the
+reference. Domain alignment dominates. Source:
+\texttt{outputs/studies/final\_study/ablations/results\_all.csv}; rendered by
+\texttt{paper/figures/render\_figures.py}.}
+\label{fig:ablation-waterfall}
+\end{figure}
+
+\subsection{Per-city results}
+\label{sec:results-percity}
+
+TrafficHZ is the strongest case for \methodname{} (\Cref{tab:percity} in \Cref{app:percity-detail}:
+0.8524 macro-F1, 0.9281 severe AUPRC). TrafficCD is a near-tie with STAEformer-Inductive and should
+not be presented as a
+decisive city-level result; TrafficSH shows a larger clean advantage over the attention-based
+adaptations but the lowest absolute severe AUPRC of the three cities.
+
+\subsection{Calibration and efficiency}
+\label{sec:results-calib-eff}
+
+\methodname{} has the best NLL and Brier score in the suite but not the best ECE (STAEformer is
+lower); full calibration and parameter/throughput tables are in \Cref{app:calibration,app:efficiency}.
+APS conformal coverage is 0.9984$\pm$0.0003 against a nominal 0.90 target with mean set size
+2.1552$\pm$0.0834 -- substantially over-conservative, and, because source-calibration and an unseen
+target city are not guaranteed exchangeable, we report this as an observed transfer result rather
+than a formal coverage guarantee. \methodname{} is the smallest neural model in the suite
+(38{,}048--66{,}600 parameters, 3--12$\times$ fewer than STAEformer-Inductive) and runs inference
+roughly 3.5$\times$ faster than it, while training roughly 2$\times$ faster; it is slower to train
+than the plain recurrent controls, since the diffusion, gating, and domain-adversarial machinery is
+not free (\Cref{app:efficiency}). The confusion matrix and severe-event calibration/PR curves for
+one registered run are given in \Cref{app:qualitative}: errors concentrate between adjacent
+severity classes, consistent with the ordinal structure of the label space.

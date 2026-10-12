@@ -1,0 +1,20 @@
+% Source: outputs/studies/final_study/main/results_all.csv, parameters/
+% train_seconds/predictions_per_second columns, neural models only.
+% Regenerate with: python paper/tables/generate_tables.py
+\begin{table}[t]
+\centering
+\caption{Neural efficiency, mean over nine runs. Parameter ranges reflect target-specific tuned widths; throughput is million node-predictions/s.}
+\label{tab:efficiency}
+\begin{tabular}{lccc}
+\toprule
+Method & Parameters $\downarrow$ & Train seconds $\downarrow$ & Throughput $\uparrow$ \\
+\midrule
+GRU & 18,989--127,429 & 50.9$\pm$21.9 & 0.981$\pm$0.230M \\
+Graph-GRU & 49,701--193,605 & 48.7$\pm$24.1 & 0.954$\pm$0.216M \\
+\textbf{ShiftGuard-RUGD} & 38,048--66,600 & 117.9$\pm$29.3 & 1.023$\pm$0.351M \\
+OpenCity-Scratch & 93,123--207,267 & 35.8$\pm$4.8 & 0.883$\pm$0.248M \\
+UIGNN-Inductive & 253,711 & 168.3$\pm$5.4 & 1.080$\pm$0.396M \\
+STAEformer-Inductive & 203,339--452,463 & 230.9$\pm$75.6 & 0.292$\pm$0.067M \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,26 @@
+% Source: outputs/studies/final_study/main/paired_robustness_significance.csv
+% (computed by src/traffic_ml/opencity_statistics.py: exact Wilcoxon, rank-biserial,
+% hierarchical city-then-seed bootstrap, Holm correction over learned baselines).
+% Regenerate with: python paper/tables/generate_tables.py
+\begin{table}[t]
+\centering
+\caption{Exploratory paired severe-AUPRC inference. $\Delta$ is \methodname{} minus baseline; CI is a hierarchical city/seed bootstrap; $p_H$ is Holm-adjusted over learned baselines.}
+\label{tab:paired-inference}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llccccc}
+\toprule
+Missing & Baseline & $\Delta$ mean$\pm$SD & 95\% CI & Wins & $r_{rb}$ & $p$ / $p_H$ \\
+\midrule
+30\% & Graph-GRU & +0.0530$\pm$0.0604 & [+0.0037, +0.1079] & 7/9 & 0.778 & 0.0391 / 0.1172 \\
+30\% & GRU & +0.1038$\pm$0.0348 & [+0.0706, +0.1440] & 9/9 & 1.000 & 0.0039 / 0.0625 \\
+30\% & OpenCity-Scratch & +0.1477$\pm$0.0767 & [+0.0528, +0.2168] & 9/9 & 1.000 & 0.0039 / 0.0625 \\
+30\% & STAEformer-Inductive & -0.0201$\pm$0.0334 & [-0.0513, +0.0142] & 3/9 & -0.556 & 0.1641 / 0.1953 \\
+30\% & UIGNN-Inductive & +0.0543$\pm$0.0295 & [+0.0243, +0.0763] & 8/9 & 0.956 & 0.0078 / 0.0625 \\
+50\% & Graph-GRU & +0.1820$\pm$0.1529 & [+0.0404, +0.3213] & 8/9 & 0.956 & 0.0078 / 0.0625 \\
+50\% & GRU & +0.2508$\pm$0.0687 & [+0.1678, +0.3086] & 9/9 & 1.000 & 0.0039 / 0.0625 \\
+50\% & OpenCity-Scratch & +0.3458$\pm$0.1187 & [+0.1982, +0.4441] & 9/9 & 1.000 & 0.0039 / 0.0625 \\
+50\% & STAEformer-Inductive & -0.0217$\pm$0.0384 & [-0.0571, +0.0185] & 2/9 & -0.644 & 0.0977 / 0.1953 \\
+50\% & UIGNN-Inductive & +0.0995$\pm$0.0335 & [+0.0640, +0.1280] & 9/9 & 1.000 & 0.0039 / 0.0625 \\
+\bottomrule
+\end{tabular}}
+\end{table}

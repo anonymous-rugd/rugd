@@ -1,0 +1,84 @@
+% Source: src/traffic_ml/opencity_models.py (DeepTrafficModel forward pass) and
+% src/traffic_ml/losses.py (focal_evidential_loss, GradientReverse). Notation matches Method
+% Eqs. 1-5 (alpha^loc, m_i, h_i, s_i, z_i, alpha_i) -- symbols are labeled on arrows here; full
+% formulas live in the Method text rather than being repeated in the figure.
+%
+% Third revision, compacted: the 2nd revision's natural bounding box was ~26x20cm, which
+% \resizebox{\linewidth}{!}{...} would have shrunk to an illegibly small font once scaled down
+% to fit the page width (font size scales with the same factor as everything else). This
+% version uses fixed absolute coordinates (as the 2nd revision did, to keep every box's
+% position and gap checkable directly from source rather than only after a render) but with a
+% tightened grid, bringing the natural footprint down to roughly 19x10.5cm -- scaling to
+% \linewidth now shrinks text by a much smaller, still-legible factor. The in-figure legend
+% (a further source of both height and of the exact nested-node-in-node pattern that caused a
+% "TeX capacity exceeded" error in an earlier revision) is removed entirely; the color/style key
+% is given in the caption instead, which is both safer and more compact.
+\begin{tikzpicture}[
+  font=\footnotesize,
+  >=Stealth,
+  every node/.style={align=center},
+  block/.style={draw, thick, rounded corners=2pt, minimum height=9mm, text width=21mm, fill=blockfill, inner sep=2pt},
+  encoder/.style={block, fill=encfill},
+  head/.style={block, fill=headfill},
+  aux/.style={block, dashed, fill=auxfill, text width=19mm},
+  diff/.style={block, fill=difffill, text width=24mm, minimum height=12mm},
+  op/.style={circle, draw, thick, inner sep=0pt, minimum size=5mm, fill=white},
+  train/.style={-{Stealth[length=1.8mm]}, dashed, thick, color=trainedge},
+  infer/.style={-{Stealth[length=1.8mm]}, thick, color=inferedge},
+  lbl/.style={font=\tiny, midway, above, sloped},
+]
+
+\colorlet{encfill}{blue!10}
+\colorlet{headfill}{orange!14}
+\colorlet{difffill}{teal!12}
+\colorlet{auxfill}{red!8}
+\colorlet{blockfill}{gray!8}
+\colorlet{trainedge}{red!60!black}
+\colorlet{inferedge}{black}
+
+% ---- shared encoders ----
+\node[encoder] (hist) at (0,1.6)    {History + mask\\ $x_{t-11:t,i}$, mask$_i$};
+\node[encoder] (topo) at (0,-1.6)   {Topology + calendar};
+\node[encoder] (gru)  at (3.2,1.6)  {Shared GRU\\ (node/city-shared)};
+\node[encoder] (ctx)  at (3.2,-1.6) {ID-free context\\ encoder};
+
+% ---- fusion 1 + local evidential branch ----
+\node[op]   (fuse1)     at (5.8,0)    {$+$};
+\node[head] (localhead) at (5.8,3.4)  {Local Dirichlet\\ head (Eq.~1)};
+\node[aux]  (localloss) at (5.8,5.7)  {Local rare-event\\ loss (source-only)};
+
+% ---- diffusion core ----
+\node[diff] (diffusion) at (9.7,0) {Degree-normalized\\ diffusion, $K$ steps\\ (Eq.~2--3)};
+
+% ---- fusion 2 + final head/output ----
+\node[op]    (fuse2)     at (13.4,0)   {$+$};
+\node[head]  (finalhead) at (13.4,3.4) {Final Dirichlet\\ head};
+\node[block] (out)       at (17.6,3.4) {$\hat p$, vacuity $u_i$\\ (norm./warn./severe)};
+\node[aux]   (calib)     at (17.6,0)   {Source-only temp.\\ + APS};
+
+% ---- domain alignment (training-only) ----
+\node[op]  (grl)  at (13.4,-3.4) {GRL};
+\node[aux] (disc) at (17.6,-3.4) {Source-city\\ discriminator};
+
+% ---- inference path (solid) ----
+\draw[infer] (hist) -- (gru);
+\draw[infer] (topo) -- (ctx);
+\draw[infer] (gru) -- (fuse1);
+\draw[infer] (ctx) -- (fuse1);
+\draw[infer] (fuse1) -- (localhead);
+\draw[infer] (fuse1) -- (diffusion) node[lbl] {$z_i$};
+\draw[infer] (diffusion) -- (fuse2) node[lbl] {$h_i^{(K)}$};
+\draw[infer] (fuse2) -- (finalhead);
+\draw[infer] (finalhead) -- (out);
+\draw[infer] (fuse2) -- (calib);
+% No edge from localhead to out: per Method Sec. 3.1 the local evidential head does not alter
+% spatial transport and has no forward path to the final output -- only the training-time
+% auxiliary loss below (dashed).
+
+% ---- training-only path (dashed) ----
+\draw[train] (localhead) -- (localloss);
+\draw[train] (fuse2) -- (grl);
+\draw[train] (grl) -- (disc);
+\node[font=\tiny] at ($(grl)!0.5!(disc)$) [above] {$\times(-\lambda)$};
+
+\end{tikzpicture}

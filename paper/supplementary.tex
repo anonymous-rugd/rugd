@@ -1,0 +1,76 @@
+% Standalone supplementary PDF: same appendix content as main.tex's \appendix block, built as
+% its own document for the separate supplementary upload ICLR accepts alongside the main PDF.
+% Uses the same style-detection logic as main.tex -- see iclr2027_fallback_shim.sty for why a
+% placeholder is used until the real iclr2027_conference.sty is available.
+\documentclass{article}
+
+\usepackage{iftex}
+\newif\ifhasrealstyle
+\IfFileExists{iclr2027_conference.sty}{\hasrealstyletrue}{\hasrealstylefalse}
+\ifhasrealstyle
+  \usepackage{iclr2027_conference}
+\else
+  \usepackage{iclr2027_fallback_shim}
+\fi
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{pifont}
+% No TikZ/PGFPlots needed here: this document only \input's sections/appendix.tex, whose
+% figure (the qualitative confusion-matrix/calibration panel) is a pre-rendered vector PDF
+% placed via \includegraphics (paper/figures/render_figures.py); the architecture diagram
+% (still live TikZ in main.tex) is not referenced from the appendix.
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{natbib}
+\IfFileExists{iclr2027_conference.bst}{\bibliographystyle{iclr2027_conference}}{\bibliographystyle{plainnat}}
+
+\usepackage[
+  pdftitle={Supplementary Material: Domain-Aligned Compact Graph Diffusion for Zero-Shot Cross-City Severe-Congestion Classification},
+  pdfauthor={}, pdfsubject={}, pdfkeywords={}, pdfcreator={}, pdfproducer={},
+  colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue,
+]{hyperref}
+
+% This appendix cross-references ~14 labels that live in main.tex's other sections (e.g.
+% sec:results, tab:headline) which are NOT \input here, since this document is only the
+% appendix. Without help, those would render as broken "??" in this standalone PDF. xr-hyper
+% imports label definitions from main.aux, so \Cref here resolves them to "Section 5",
+% "Table 2", etc. exactly as numbered in the main paper. REQUIRES main.tex to be compiled at
+% least once first, in this same project directory, so main.aux exists -- if it doesn't yet,
+% this degrades gracefully to the previous "??" behavior (a warning, not a fatal error), so
+% compiling supplementary.tex alone never breaks; compile main.tex first to get real numbers.
+% Labels defined locally in this document's own copy of the appendix (app:*, tab:search-space)
+% still resolve correctly either way: xr gives local definitions precedence over imported ones.
+\usepackage{xr-hyper}
+\externaldocument{main}
+
+% cleveref must load after hyperref (and is conventionally loaded last of all packages).
+\usepackage[capitalize,noabbrev]{cleveref}
+
+\newcommand{\methodname}{ShiftGuard-RUGD}
+
+\title{Supplementary Material: Domain-Aligned Compact Graph Diffusion for \\
+Zero-Shot Cross-City Severe-Congestion Classification}
+\author{Anonymous authors \\ Paper under double-blind review}
+\date{}
+
+\begin{document}
+\maketitle
+\ifhasrealstyle\else\PLACEHOLDERBANNER\fi
+
+\noindent This document contains the same appendix content as \texttt{main.tex}'s
+\texttt{\textbackslash appendix} block (Appendices A--K), reproduced standalone for the
+supplementary-material upload. It assumes the reader has the main paper (Sections 1--8) for
+context, notation, and the primary tables/figures it repeatedly cross-references.
+
+\appendix
+\input{sections/appendix.tex}
+
+\bibliography{refs}
+
+\end{document}

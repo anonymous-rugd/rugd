@@ -1,0 +1,24 @@
+% Source: outputs/studies/final_study/main/TrafficCD/rugd/seed_17/predictions.npz (same run as
+% confusion_matrix.tex), sklearn.calibration.calibration_curve (12 bins) and
+% sklearn.metrics.precision_recall_curve for the severe class, exported to
+% paper/figures/data/{calibration_curve,pr_curve}.csv.
+% Regenerate with: python paper/figures/regenerate_figure_data.py
+\begin{tikzpicture}
+\begin{groupplot}[
+  group style={group size=2 by 1, horizontal sep=16mm},
+  width=5.6cm, height=5.0cm,
+  tick label style={font=\scriptsize},
+  label style={font=\scriptsize},
+  legend style={font=\tiny},
+]
+\nextgroupplot[xlabel={Predicted severe probability}, ylabel={Observed frequency},
+  title={Severe-event calibration}, xmin=0, xmax=1, ymin=0, ymax=1]
+\addplot [blue!70!black, mark=*, mark size=1.5pt] table [x=predicted, y=observed, col sep=comma]
+  {figures/data/calibration_curve.csv};
+\addplot [dashed, gray] coordinates {(0,0) (1,1)};
+\nextgroupplot[xlabel={Recall}, ylabel={Precision}, title={Severe-event PR curve},
+  xmin=0, xmax=1, ymin=0, ymax=1]
+\addplot [red!70!black, thick] table [x=recall, y=precision, col sep=comma]
+  {figures/data/pr_curve.csv};
+\end{groupplot}
+\end{tikzpicture}

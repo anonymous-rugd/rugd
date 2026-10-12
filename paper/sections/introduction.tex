@@ -1,0 +1,58 @@
+\section{Introduction}
+\label{sec:intro}
+
+Traffic-congestion forecasting is spatial, non-stationary, and operationally asymmetric: missing a
+severe congestion event is not equivalent to a small error on free-flow speed. Most benchmarks
+nevertheless train and evaluate on the same sensor network, optimize average regression error, and
+report point predictions. Deploying to a newly instrumented city breaks every one of these
+assumptions: the road topology changes, the sensor identities are new, the traffic regime differs,
+and -- critically -- there are no historical labels for that city to train, calibrate, or select a
+model against.
+
+Prior work studies pieces of this problem separately. Traffic4Cast established spatial and temporal
+transfer as a benchmark question \citep{eichenberger2022traffic4cast21,neun2022traffic4cast22};
+CrossTReS, SFMGTL, and SCPT study cross-city or cross-road transfer, but typically fine-tune on
+some target signal \citep{jin2022crosstres,chen2024sfmgtl,prabowo2024scpt}; STEP, UniST, and
+OpenCity pursue pretrained or universal spatio-temporal prediction
+\citep{shao2022step,yuan2024unist,li2025opencity}; and DeepSTUQ, UIGNN, STUP, and ensemble methods
+address predictive uncertainty or missing observations, but within a fixed, previously-seen sensor
+network \citep{qian2022deepstuq,mei2023uignn,jin2024stup,mallick2024ensemble,yu2025uqgnn}. None of
+these lines jointly enforces target-label-free city transfer, a rare categorical endpoint, source-only
+probabilistic calibration, and multiple controlled distribution shifts in one protocol -- a scoped
+literature finding (\Cref{tab:literature-scope}), not a claim that no related paper exists anywhere.
+
+This paper targets that joint setting with \methodname{} (Robust Uncertainty-Guided Diffusion), a
+compact, ID-free recurrent graph classifier. Its architecture keeps the spatial mechanism
+deliberately simple -- shared temporal encoding followed by degree-normalized diffusion and gated
+residual fusion -- while local and final evidential heads, effective-number rare-event weighting,
+and an explicit domain-adversarial alignment term shape the representation for transfer. The paper's
+central empirical finding, established by a matched seven-variant ablation
+(\Cref{sec:results,tab:ablation}), is that this transfer behavior is not distributed evenly across
+the architecture: removing the domain-adversarial term costs roughly four times more severe-AUPRC
+than removing graph diffusion, and roughly thirty times more than removing either rare-event
+mechanism. We treat this as the paper's primary, falsifiable claim, and the model's competitive
+standing among 11 baselines as a secondary consequence of building around that mechanism at a
+compact scale -- rather than leading with the leaderboard position, whose 95\% bootstrap interval we
+show overlaps the runner-up's (\Cref{sec:results}).
+
+Our contributions are:
+\begin{itemize}
+  \item A chronological, embargoed, leave-one-city-out protocol in which target-city labels
+        influence only the final, single evaluation pass -- with source-only thresholds,
+        normalization, hyperparameter tuning, early stopping, and calibration, enforced in code and
+        covered by a regression test (\Cref{sec:setup}).
+  \item A compact, ID-free architecture integrating normalized graph diffusion, dual evidential
+        supervision, effective-number rare-event weighting, and gradient-reversal source-domain
+        alignment (\Cref{sec:method}), with an ablation that localizes cross-city transfer to a
+        specific component rather than attributing it to the architecture as a whole.
+  \item A comparison against ten baselines -- two non-learned sanity checks, three classical
+        controls, two recurrent controls, and three clean-room adaptations of recent traffic
+        Transformers/GNNs -- under matched splits, seeds, and (for four of the six tunable deep
+        models) an equal Optuna tuning budget, with the tuning-budget asymmetry for the remaining
+        two disclosed rather than hidden (\Cref{sec:setup}).
+  \item Unusually broad, honestly reported evaluation: severe-event ranking metrics, calibration
+        and conformal diagnostics, three families of controlled test-time corruption, efficiency,
+        paired bootstrap and exact Wilcoxon inference with multiplicity correction, and a specific,
+        code-level diagnosis of an anomalous uncertainty--error correlation in the two evidential
+        models in the suite, rather than an unexplained residual (\Cref{sec:analysis}).
+\end{itemize}

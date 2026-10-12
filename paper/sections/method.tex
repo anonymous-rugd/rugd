@@ -1,0 +1,97 @@
+\section{Problem and Method}
+\label{sec:method}
+
+Let city $c$ have road graph $G_c=(V_c,A_c)$ and observed speeds $x^c_{t,i}$. Twelve half-hour bins
+and their observation masks predict the next bin's class. For a held-out city $c^\star$, every
+learned parameter and every fitted statistic (normalization, class thresholds, calibration) is
+computed without access to $c^\star$'s labels. Normal, warning, and severe classes are separated by
+the 30th and 10th percentiles of \emph{source-training} speed only.
+
+\begin{figure}[t]
+  \centering
+  \resizebox{\linewidth}{!}{\input{figures/architecture.tex}}
+  \caption{\methodname{} architecture. Solid arrows: inference path. Dashed arrows: training-only
+  (the local auxiliary loss and the gradient-reversal domain discriminator). Node fill keys the
+  four component types: blue -- shared encoder, orange -- evidential (Dirichlet) head, teal --
+  degree-normalized diffusion, red (dashed border) -- source-only auxiliary module. Notation
+  matches \Cref{eq:local-evidential,eq:diffusion-message,eq:diffusion-update,eq:classification-loss,eq:total-loss}
+  exactly. Redrawn as vector TikZ from the architecture implemented in
+  \texttt{src/traffic\_ml/opencity\_models.py}; see \Cref{app:figure-redesign} for what changed
+  from the earlier illustrative version and why.}
+  \label{fig:architecture}
+\end{figure}
+
+\subsection{Shared encoding and normalized diffusion}
+\label{sec:method-diffusion}
+
+A single GRU, shared across every node and every city, encodes each node's normalized history and
+observation mask into a temporal state $h_i$. An ID-free topology/calendar encoder produces static
+context $s_i$ from four graph-derived static features (log in-/out-degree and their mean-normalized
+versions, computed from the adjacency matrix itself) and four calendar features (sine/cosine of
+time-of-day and day-of-week) -- available identically in any city, unlike a learned per-node or
+per-city embedding. Their fusion $z_i$ feeds a local evidential head,
+\begin{equation}
+  \boldsymbol\alpha_i^{\mathrm{loc}} = \mathrm{softplus}(W_{\mathrm{loc}} z_i) + \mathbf{1}, \qquad
+  u_i^{\mathrm{loc}} = K \big/ \textstyle\sum_k \alpha_{ik}^{\mathrm{loc}},
+  \label{eq:local-evidential}
+\end{equation}
+with $K=3$. The local head receives source supervision (\Cref{eq:classification-loss}) but does not
+alter spatial transport. Each of $K_{\mathrm{diff}}$ diffusion layers computes a degree-normalized
+message and a gated residual update,
+\begin{align}
+  m_i^{(\ell)} &= \frac{\sum_j A_{ij} h_j^{(\ell)}}{\max\!\big(\sum_j A_{ij},\ \epsilon\big)},
+  \label{eq:diffusion-message} \\
+  h_i^{(\ell+1)} &= \mathrm{LN}\Big(h_i^{(\ell)} + \sigma\big(W_g[h_i^{(\ell)}; m_i^{(\ell)}; 1]\big)
+  \odot \tanh\big(W_m[h_i^{(\ell)}; m_i^{(\ell)}]\big)\Big).
+  \label{eq:diffusion-update}
+\end{align}
+The constant context term in the gate retains a checkpoint-compatible residual parameterization
+across ablation variants. $K_{\mathrm{diff}}=2$ in the final tuned configuration
+(\Cref{app:hyperparameters}). Final fusion of $h_i^{(K_{\mathrm{diff}})}$ with $s_i$ produces the
+final Dirichlet parameters $\boldsymbol\alpha_i=\mathrm{softplus}(W_o h_i)+\mathbf{1}$, expected
+class probabilities $\hat p_i = \alpha_i/\sum_k \alpha_{ik}$, and vacuity $u_i=K/\sum_k\alpha_{ik}$.
+
+\subsection{Rare-event and domain objectives}
+\label{sec:method-loss}
+
+Effective-number weights \citep{cui2019effectivenumber} counter class imbalance, and focal
+modulation (exponent $\gamma$, tuned per run; \Cref{app:hyperparameters}) emphasizes hard examples.
+Writing
+$S_i=\sum_k\alpha_{ik}$, $p_{ik}=\alpha_{ik}/S_i$, and $y_i$ for the target class, the final
+classification term is
+\begin{equation}
+  \mathcal{L}_{\mathrm{cls}} = -w_{y_i}(1-p_{i,y_i})^\gamma \log p_{i,y_i}
+    + \lambda_{\mathrm{KL}}\, \mathrm{KL}\!\big[\mathrm{Dir}(\tilde{\boldsymbol\alpha}_i)
+    \,\|\, \mathrm{Dir}(\mathbf{1})\big],
+  \label{eq:classification-loss}
+\end{equation}
+where $w_k \propto (1-\beta)/(1-\beta^{n_k})$ is normalized across classes
+\citep{cui2019effectivenumber}, and $\tilde{\boldsymbol\alpha}_i$ retains the predicted
+\emph{true-class} concentration $\alpha_{i,y_i}$ while setting every non-target concentration to
+one before the KL penalty is computed (\texttt{src/traffic\_ml/losses.py::focal\_evidential\_loss},
+lines 31--33). We flag this construction explicitly here rather than leave it implicit: the
+standard evidential-deep-learning KL regularizer \citep{sensoy2018evidential} penalizes evidence
+accumulated on \emph{incorrect} classes, to suppress overconfident wrong predictions; the
+construction above penalizes evidence only on the \emph{correct} class. \Cref{sec:analysis} traces
+this asymmetry to an observed downstream effect and argues it is the most likely explanation for it.
+The identical construction (minus the domain term) defines the local auxiliary loss, weighted
+$\lambda_{\mathrm{loc}}$ against the final loss.
+
+A gradient-reversal layer \citep{ganin2015dann} -- identity in the forward pass, its gradient
+scaled by $-\lambda_{\mathrm{dom}}(t)$ in the backward pass, with $\lambda_{\mathrm{dom}}(t)$ ramped
+by a sigmoid schedule from 0 to 1 over training -- feeds the mean-pooled final representation into a
+small MLP trained to predict which \emph{source} city produced the sample. Because the gradient is
+reversed, the encoder is trained to make its representation \emph{indistinguishable} across source
+cities, which is the mechanism this paper argues (\Cref{sec:results}, ablations) is primarily
+responsible for the transfer behavior to a third, unseen city. The total loss is
+\begin{equation}
+  \mathcal{L} = \mathcal{L}_{\mathrm{final}} + \lambda_{\mathrm{loc}}\,\mathcal{L}_{\mathrm{local}}
+  + \lambda_{\mathrm{dom}}\,\mathcal{L}_{\mathrm{domain}}.
+  \label{eq:total-loss}
+\end{equation}
+No node or city identity embedding is available to the predictor at any point in this pipeline.
+Temperature scaling and adaptive prediction-set (APS) conformal calibration
+\citep{angelopoulos2021gentle} are fitted only on chronological source calibration segments,
+following split-conformal practice; because exchangeability between source calibration cities and
+an unseen target city is not guaranteed by construction, we report APS coverage on the target
+diagnostically (\Cref{sec:results}) rather than as a formal target-city guarantee.

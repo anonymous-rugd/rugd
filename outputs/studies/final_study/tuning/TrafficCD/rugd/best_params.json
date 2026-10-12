@@ -1,0 +1,11 @@
+{
+  "hidden_dim": 64,
+  "dropout": 0.3254449109999697,
+  "diffusion_steps": 2,
+  "lr": 0.0011241201921851954,
+  "weight_decay": 5.330999984461443e-05,
+  "focal_gamma": 1.078125832377733,
+  "domain_weight": 0.03163748507988035,
+  "evidence_kl_weight": 0.0068714685079096375,
+  "auxiliary_weight": 0.1
+}

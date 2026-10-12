@@ -1,0 +1,67 @@
+\section{Experimental Setup}
+\label{sec:setup}
+
+\paragraph{Data and splits.} We use the OpenCity-packaged TrafficCD, TrafficHZ, and TrafficSH
+road-sensor graphs \citep{neun2022traffic4cast22,li2025opencity}: 1{,}403 half-hour bins over
+728, 672, and 896 nodes respectively. In every leave-one-city-out fold, the two source cities are
+partitioned chronologically into 65\% train, 10\% calibration, and 10\% validation, separated by a
+12-bin (6-hour) embargo; the held-out city contributes only its final chronological 15\% segment,
+evaluated once, after every decision is frozen. Source-only severe/warning thresholds for the
+TrafficCD/HZ/SH folds are 6.2648/7.7861, 6.4688/7.9714, and 6.0548/7.4192
+(\texttt{outputs/studies/final\_study/main/*/rugd/seed\_*/target\_definition.json}).
+
+\paragraph{Baselines.} Non-learned sanity checks are the source class-frequency prior and
+last-observation persistence. Classical controls are balanced logistic regression, histogram
+gradient boosting, and LightGBM, each run with fixed, standard hyperparameters (\texttt{C=1},
+\texttt{max\_iter=250}/\texttt{500}, \texttt{num\_leaves=63}, class-balanced weighting;
+\texttt{src/traffic\_ml/opencity\_classical.py}) rather than an Optuna search -- we state this
+explicitly rather than imply parity with the tuned neural models, since these are included as
+strong non-neural reference points, not as tuning-matched competitors. Neural controls are GRU and
+Graph-GRU. We also implement inductive task adaptations of STAEformer \citep{liu2023staeformer},
+UIGNN \citep{mei2023uignn}, and OpenCity \citep{li2025opencity}: adaptations preserve each paper's
+defining mechanism but replace a fixed-graph regression head with a shared node-wise classification
+head. The UIGNN adaptation retains bidirectional Chebyshev diffusion and recovery regularization;
+STAEformer retains temporal patching, adaptive spatiotemporal embeddings, and self-attention (with
+its dataset-indexed node embeddings replaced by our topology-conditioned features, since the
+originals are undefined on an unseen graph); OpenCity-Scratch retains masked temporal modeling and
+graph-aware Transformer blocks. All models receive identical histories, source-only thresholds,
+splits, output classes, and evaluation code, and none is claimed as an official reproduction.
+Released OpenCity checkpoints are excluded because their public pretraining set includes TrafficCD
+and TrafficHZ, which would contaminate zero-shot evaluation on those cities.
+
+\paragraph{Tuning budget (disclosed asymmetry).} RUGD, UIGNN, and the two Transformer adaptations
+were tuned with source-only Optuna search under an identical objective (below); this is directly
+evidenced in this study's run logs (12 completed searches: RUGD and UIGNN at 20 trials/city, the
+two Transformers at 8 compute-matched trials/city). \textbf{GRU and Graph-GRU were not tuned within
+this study's logged pipeline}: their final configurations were carried in as fixed,
+RUGD-search-space-matched hyperparameters from an earlier tuning pass whose trial records are not
+part of this study's retained artifacts. We report this as a limitation on tuning parity for these
+two specific baselines rather than omit it (\Cref{sec:limitations}); the four models that were
+tuned within this study (RUGD, UIGNN, STAEformer-Inductive, OpenCity-Scratch) remain fully
+evidenced and mutually parity-comparable. The shared objective weights clean macro-F1 (0.40),
+clean severe AUPRC (0.30), and 30\%-missing macro-F1/AUPRC (0.15 each), computed per source city
+and averaged so the larger source graph does not dominate selection; the exact formula and full
+per-hyperparameter search ranges are in \Cref{app:hyperparameters}. Target labels never enter
+tuning, selection, or calibration at any stage (enforced in code and covered by a regression
+test; \Cref{sec:limitations}).
+
+\paragraph{Seeds and runs.} Three fixed seeds (17, 42, 2025) $\times$ 3 held-out cities $\times$
+11 models = 99 main-suite runs, plus 3 cities $\times$ 7 RUGD-variant ablations $\times$ 3 seeds =
+63 matched ablation runs -- 162 registered training runs total, each with a checkpoint,
+predictions, and a \texttt{provenance.json} recording the exact resolved configuration. No seed or
+run is omitted from any reported aggregate.
+
+\paragraph{Evaluation.} Primary metrics are macro-F1 and severe-class AUPRC. Secondary metrics
+include severe precision/recall/F1/AUROC, balanced accuracy, NLL, Brier score, ECE, ACE,
+uncertainty--error Spearman correlation, APS coverage/set size, parameter count, training time, and
+inference throughput. Stress tests independently mask 10/30/50\% of observations, add Gaussian
+noise at $\sigma\in\{0.1,0.3\}$, or roll input histories by one or two bins, in each case reusing
+clean-fit source calibration (not re-tuned per condition) to measure generalization robustness
+rather than re-calibrated robustness. Paired inference on timestamp-level NLL differences uses
+block bootstrap and Wilcoxon tests; the headline 30\%/50\%-missing AUPRC comparisons use the nine
+paired city--seed scores, exact two-sided Wilcoxon tests, rank-biserial effect sizes, a 20{,}000-draw
+hierarchical city-then-seed bootstrap, and Holm correction across learned baselines. Because three
+seeds on one city are not three independent geographies, we additionally report an exact sign-flip
+test over the three city-level means as a conservative sensitivity check; its minimum achievable
+two-sided $p$-value with three cities is 0.25, so no city-level/geographic significance is claimed
+anywhere in this paper.

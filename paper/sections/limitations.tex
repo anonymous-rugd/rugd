@@ -1,0 +1,49 @@
+\section{Limitations}
+\label{sec:limitations}
+
+\textbf{Development status.} The final architecture was selected after inspecting all three
+OpenCity folds during development; TrafficSH in particular was used in an earlier smoke study
+(\texttt{rugd\_smoke\_v1}) that directly informed the normalized-diffusion design
+(\texttt{docs/OPENCITY\_PROTOCOL.md}). All three folds are reported, but TrafficCD and TrafficHZ
+are the primary confirmatory folds; TrafficSH is development evidence reported as a third fold,
+not an untouched held-out geography. Target-city \emph{labels} never enter tuning or selection at
+any stage (enforced in code and tested directly by
+\texttt{tests/test\_opencity.py::test\_source\_statistics\_do\_not\_consult\_target}, which mutates
+target-city data after fitting source statistics and asserts the fit is unchanged), but the
+architecture itself was chosen with all three folds' unlabeled structure visible during
+development. A genuinely unseen fourth city or an external dataset is the only way to settle
+whether this design choice generalizes beyond three-city internal evidence.
+
+\textbf{Tuning-budget asymmetry for two baselines.} As disclosed in \Cref{sec:setup}, GRU and
+Graph-GRU were not tuned within this study's logged Optuna pipeline; their hyperparameters were
+carried in from an earlier, unretained tuning pass. The four models that were tuned within this
+study (RUGD, UIGNN-Inductive, STAEformer-Inductive, OpenCity-Scratch) remain fully evidenced and
+mutually comparable; GRU/Graph-GRU's standing relative to those four should be read with this
+asymmetry in mind.
+
+\textbf{Not universally dominant.} STAEformer-Inductive wins under the two heaviest sensor-dropout
+conditions (\Cref{tab:robustness}); \methodname{} is not robust to every registered condition, and
+we do not claim it is. Attention over the full temporal window plausibly lets STAEformer recover
+missing recent readings more gracefully than \methodname{}'s local temporal encoder plus
+degree-normalized diffusion, but this mechanism has not been isolated experimentally -- a wider-
+temporal-receptive-field variant of \methodname{} would be the natural follow-up ablation.
+
+\textbf{No city-level statistical significance.} With three held-out cities, the exact sign-flip
+test's minimum achievable two-sided $p$-value is 0.25 (\Cref{sec:setup}); no claim of geographic
+generalization beyond these three cities is made anywhere in this paper. The paired, seed-level
+Wilcoxon results (\Cref{app:paired-inference}) are strong (rank-biserial $=1.0$ against GRU,
+Graph-GRU, UIGNN, and OpenCity-Scratch at both missingness levels) but characterize
+seed/optimization variance on these three specific cities, not independent geographic replication.
+
+\textbf{Uncertainty-quality asymmetry, diagnosed but not fixed.} See \Cref{sec:analysis}.
+
+\textbf{No official baseline reproductions.} STAEformer, UIGNN, and OpenCity are clean-room task
+adaptations chosen for protocol fairness within this study, not bit-identical reproductions of
+their original papers; their published numbers on their own benchmarks (different labels, horizon,
+and splits) are not directly comparable to anything reported here.
+
+\textbf{Scope.} The study covers three cities, one country, and source-relative speed thresholds
+rather than independently verified incident labels. Three seeds characterize optimization
+variance, not geographic diversity. A publication-grade confirmatory claim needs additional cities
+or an external dataset, and ideally independent or official baseline reproductions alongside these
+adaptations.

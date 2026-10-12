@@ -1,0 +1,17 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+Under a strictly source-only, leave-one-city-out protocol for zero-shot severe-congestion
+classification, a matched component ablation localizes cross-city transfer almost entirely to
+explicit domain-adversarial source alignment, not to graph diffusion, evidential supervision, or
+rare-event loss weighting -- a specific, falsifiable claim about \emph{why} a model transfers,
+rather than an unexplained leaderboard position. Built around that mechanism, \methodname{}
+attains the best mean macro-F1 and severe AUPRC among 11 compared models at 3--12$\times$ fewer
+parameters than its closest competitor, with the best proper-scoring-rule calibration in the
+suite, while its bootstrap interval over that margin overlaps the runner-up's and it trails under
+heavy sensor dropout -- both stated plainly rather than obscured. We further trace an anomalous
+uncertainty--error correlation in the two evidential models in the suite to a specific,
+code-level asymmetry in the evidential KL regularizer, a diagnosis rather than a closed result.
+Taken together, the evidence supports a compact, mechanistically localized, and honestly bounded
+operating point for zero-shot severe-congestion prediction. Independent confirmation on additional
+cities or an external dataset remains necessary before any stronger claim is warranted.

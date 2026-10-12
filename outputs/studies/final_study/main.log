@@ -1,0 +1,75 @@
+2026-09-13 14:11:38 | INFO | STUDY final_study | 36 registered runs | GPU=NVIDIA GeForce RTX 5080 | tuned=True
+2026-09-13 14:11:38 | INFO | [01/36] START | city=TrafficCD model=rugd seed=17
+2026-09-13 14:12:52 | INFO | [01/36] DONE  | 74.0s | macro_f1=0.83181 severe_auprc=0.87326
+2026-09-13 14:12:52 | INFO | [02/36] START | city=TrafficCD model=rugd seed=42
+2026-09-13 14:14:17 | INFO | [02/36] DONE  | 84.8s | macro_f1=0.83348 severe_auprc=0.87528
+2026-09-13 14:14:17 | INFO | [03/36] START | city=TrafficCD model=rugd seed=2025
+2026-09-13 14:16:11 | INFO | [03/36] DONE  | 113.4s | macro_f1=0.83395 severe_auprc=0.87788
+2026-09-13 14:16:11 | INFO | [04/36] START | city=TrafficCD model=uignn_inductive seed=17
+2026-09-13 14:19:01 | INFO | [04/36] DONE  | 170.7s | macro_f1=0.81936 severe_auprc=0.84441
+2026-09-13 14:19:01 | INFO | [05/36] START | city=TrafficCD model=uignn_inductive seed=42
+2026-09-13 14:21:53 | INFO | [05/36] DONE  | 172.2s | macro_f1=0.81436 severe_auprc=0.83060
+2026-09-13 14:21:53 | INFO | [06/36] START | city=TrafficCD model=uignn_inductive seed=2025
+2026-09-13 14:24:31 | INFO | [06/36] DONE  | 157.1s | macro_f1=0.81281 severe_auprc=0.84869
+2026-09-13 14:24:31 | INFO | [07/36] START | city=TrafficCD model=staeformer_inductive seed=17
+2026-09-13 14:29:29 | INFO | [07/36] DONE  | 298.7s | macro_f1=0.83442 severe_auprc=0.87768
+2026-09-13 14:29:29 | INFO | [08/36] START | city=TrafficCD model=staeformer_inductive seed=42
+2026-09-13 14:35:41 | INFO | [08/36] DONE  | 371.7s | macro_f1=0.83618 severe_auprc=0.87744
+2026-09-13 14:35:41 | INFO | [09/36] START | city=TrafficCD model=staeformer_inductive seed=2025
+2026-09-13 14:40:39 | INFO | [09/36] DONE  | 298.4s | macro_f1=0.83329 severe_auprc=0.87573
+2026-09-13 14:40:39 | INFO | [10/36] START | city=TrafficCD model=opencity_scratch seed=17
+2026-09-13 14:41:27 | INFO | [10/36] DONE  | 47.3s | macro_f1=0.82937 severe_auprc=0.87264
+2026-09-13 14:41:27 | INFO | [11/36] START | city=TrafficCD model=opencity_scratch seed=42
+2026-09-13 14:42:04 | INFO | [11/36] DONE  | 37.5s | macro_f1=0.82377 severe_auprc=0.86909
+2026-09-13 14:42:04 | INFO | [12/36] START | city=TrafficCD model=opencity_scratch seed=2025
+2026-09-13 14:42:48 | INFO | [12/36] DONE  | 44.1s | macro_f1=0.83212 severe_auprc=0.87455
+2026-09-13 14:42:48 | INFO | [13/36] START | city=TrafficHZ model=rugd seed=17
+2026-09-13 14:45:03 | INFO | [13/36] DONE  | 135.0s | macro_f1=0.85157 severe_auprc=0.92791
+2026-09-13 14:45:03 | INFO | [14/36] START | city=TrafficHZ model=rugd seed=42
+2026-09-13 14:47:23 | INFO | [14/36] DONE  | 139.8s | macro_f1=0.85317 severe_auprc=0.92690
+2026-09-13 14:47:23 | INFO | [15/36] START | city=TrafficHZ model=rugd seed=2025
+2026-09-13 14:49:43 | INFO | [15/36] DONE  | 139.4s | macro_f1=0.85162 severe_auprc=0.92504
+2026-09-13 14:49:43 | INFO | [16/36] START | city=TrafficHZ model=uignn_inductive seed=17
+2026-09-13 14:52:37 | INFO | [16/36] DONE  | 174.2s | macro_f1=0.83352 severe_auprc=0.90758
+2026-09-13 14:52:37 | INFO | [17/36] START | city=TrafficHZ model=uignn_inductive seed=42
+2026-09-13 14:55:32 | INFO | [17/36] DONE  | 175.4s | macro_f1=0.83318 severe_auprc=0.90851
+2026-09-13 14:55:32 | INFO | [18/36] START | city=TrafficHZ model=uignn_inductive seed=2025
+2026-09-13 14:58:26 | INFO | [18/36] DONE  | 173.8s | macro_f1=0.83673 severe_auprc=0.90736
+2026-09-13 14:58:26 | INFO | [19/36] START | city=TrafficHZ model=staeformer_inductive seed=17
+2026-09-13 15:02:39 | INFO | [19/36] DONE  | 253.5s | macro_f1=0.84710 severe_auprc=0.92817
+2026-09-13 15:02:39 | INFO | [20/36] START | city=TrafficHZ model=staeformer_inductive seed=42
+2026-09-13 15:06:17 | INFO | [20/36] DONE  | 217.9s | macro_f1=0.83436 severe_auprc=0.92511
+2026-09-13 15:06:17 | INFO | [21/36] START | city=TrafficHZ model=staeformer_inductive seed=2025
+2026-09-13 15:09:19 | INFO | [21/36] DONE  | 182.0s | macro_f1=0.84663 severe_auprc=0.92485
+2026-09-13 15:09:19 | INFO | [22/36] START | city=TrafficHZ model=opencity_scratch seed=17
+2026-09-13 15:09:57 | INFO | [22/36] DONE  | 37.7s | macro_f1=0.84602 severe_auprc=0.91848
+2026-09-13 15:09:57 | INFO | [23/36] START | city=TrafficHZ model=opencity_scratch seed=42
+2026-09-13 15:10:29 | INFO | [23/36] DONE  | 31.4s | macro_f1=0.83542 severe_auprc=0.91585
+2026-09-13 15:10:29 | INFO | [24/36] START | city=TrafficHZ model=opencity_scratch seed=2025
+2026-09-13 15:11:03 | INFO | [24/36] DONE  | 34.7s | macro_f1=0.84639 severe_auprc=0.92043
+2026-09-13 15:11:03 | INFO | [25/36] START | city=TrafficSH model=rugd seed=17
+2026-09-13 15:12:55 | INFO | [25/36] DONE  | 112.0s | macro_f1=0.82824 severe_auprc=0.86144
+2026-09-13 15:12:55 | INFO | [26/36] START | city=TrafficSH model=rugd seed=42
+2026-09-13 15:14:38 | INFO | [26/36] DONE  | 103.2s | macro_f1=0.82499 severe_auprc=0.85838
+2026-09-13 15:14:38 | INFO | [27/36] START | city=TrafficSH model=rugd seed=2025
+2026-09-13 15:16:31 | INFO | [27/36] DONE  | 112.5s | macro_f1=0.82635 severe_auprc=0.85738
+2026-09-13 15:16:31 | INFO | [28/36] START | city=TrafficSH model=uignn_inductive seed=17
+2026-09-13 15:19:22 | INFO | [28/36] DONE  | 171.1s | macro_f1=0.80756 severe_auprc=0.82255
+2026-09-13 15:19:22 | INFO | [29/36] START | city=TrafficSH model=uignn_inductive seed=42
+2026-09-13 15:22:13 | INFO | [29/36] DONE  | 170.5s | macro_f1=0.80176 severe_auprc=0.81904
+2026-09-13 15:22:13 | INFO | [30/36] START | city=TrafficSH model=uignn_inductive seed=2025
+2026-09-13 15:25:03 | INFO | [30/36] DONE  | 170.6s | macro_f1=0.80212 severe_auprc=0.82263
+2026-09-13 15:25:03 | INFO | [31/36] START | city=TrafficSH model=staeformer_inductive seed=17
+2026-09-13 15:28:06 | INFO | [31/36] DONE  | 183.1s | macro_f1=0.81589 severe_auprc=0.84375
+2026-09-13 15:28:06 | INFO | [32/36] START | city=TrafficSH model=staeformer_inductive seed=42
+2026-09-13 15:31:02 | INFO | [32/36] DONE  | 175.9s | macro_f1=0.81463 severe_auprc=0.84042
+2026-09-13 15:31:02 | INFO | [33/36] START | city=TrafficSH model=staeformer_inductive seed=2025
+2026-09-13 15:33:21 | INFO | [33/36] DONE  | 138.7s | macro_f1=0.80914 severe_auprc=0.84003
+2026-09-13 15:33:21 | INFO | [34/36] START | city=TrafficSH model=opencity_scratch seed=17
+2026-09-13 15:33:58 | INFO | [34/36] DONE  | 37.2s | macro_f1=0.81005 severe_auprc=0.83960
+2026-09-13 15:33:58 | INFO | [35/36] START | city=TrafficSH model=opencity_scratch seed=42
+2026-09-13 15:34:33 | INFO | [35/36] DONE  | 34.5s | macro_f1=0.81566 severe_auprc=0.84021
+2026-09-13 15:34:33 | INFO | [36/36] START | city=TrafficSH model=opencity_scratch seed=2025
+2026-09-13 15:35:12 | INFO | [36/36] DONE  | 39.6s | macro_f1=0.81319 severe_auprc=0.84223
+2026-09-13 15:35:12 | INFO | REPORT | aggregating, paired inference, ensembles, plots, and summary
+2026-09-13 15:35:30 | INFO | COMPLETE | elapsed 83.9 minutes | summary=outputs\studies\final_study\main\RESEARCH_SUMMARY.md

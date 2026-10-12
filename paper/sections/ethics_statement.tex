@@ -1,0 +1,16 @@
+\section*{Ethics Statement}
+\addcontentsline{toc}{section}{Ethics Statement}
+
+This work uses only publicly released, aggregate road-sensor speed data and adjacency matrices
+(the OpenCity TrafficCD/TrafficHZ/TrafficSH release); no individual-traveler data is used or
+claimed to be represented. Congestion labels are derived from source-relative speed percentiles,
+not independently verified incident records, and should not be treated as ground-truth incident
+detection. A model of this kind, if deployed, could influence traffic routing or resource
+allocation decisions (e.g., which roads receive priority signal timing or incident-response
+dispatch); such deployment should not proceed without local revalidation on the target city's own
+eventual labels, an explicit neighborhood-level fairness assessment (since which areas are
+over- or under-served by sparse sensor coverage is itself a distributive question this study does
+not evaluate), integration of incident and weather covariates that this study does not model, and
+continuous monitoring with human oversight in the loop. We are not aware of a dual-use or
+population-surveillance risk specific to this work beyond those inherent to traffic-sensor
+infrastructure in general.

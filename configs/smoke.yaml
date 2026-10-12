@@ -1,0 +1,8 @@
+project: {name: shiftguard_rugd_smoke, output_dir: outputs/experiments/smoke, seeds: [17, 42, 2025]}
+data: {root: data/open_city/raw, cities: [TrafficCD, TrafficHZ, TrafficSH], target_city: TrafficSH, history_steps: 12, horizon_steps: 1, interval_minutes: 30, start_timestamp: "2022-03-07T18:00", missing_value: 0.0, classical_train_cap: 50000}
+split: {train_fraction: 0.6, calibration_fraction: 0.1, validation_fraction: 0.1, test_fraction: 0.2, embargo_steps: 2}
+target: {severe_quantile: 0.1, warning_quantile: 0.3}
+model: {hidden_dim: 64, dropout: 0.1, diffusion_steps: 2}
+training: {epochs: 10, time_batch_size: 12, lr: 0.002, weight_decay: 0.0001, patience: 4, amp: true, grad_clip: 1.0, focal_gamma: 2.0, effective_beta: 0.99, domain_weight: 0.1, evidence_kl_weight: 0.001, auxiliary_weight: 0.1, validation_missing_rate: 0.3, selection_weights: {clean_macro: 0.4, clean_severe: 0.3, missing_macro: 0.15, missing_severe: 0.15}}
+evaluation: {ece_bins: 10, conformal_alpha: 0.1, bootstrap_repeats: 100}
+robustness: {missing_rates: [0.3], noise_std: [0.2], temporal_shifts: [1]}

@@ -1,0 +1,28 @@
+\begin{abstract}
+% Every number in this abstract traces to outputs/studies/final_study/{main,ablations}/results_all.csv;
+% see tables/headline.tex and tables/ablation.tex for the exact aggregation commands.
+Traffic-congestion models are usually trained and evaluated on the same city, which hides a
+practical failure mode: a newly instrumented city has no historical labels, and the operationally
+important case -- rare, severe congestion -- is easy to miss while still scoring well on average.
+We study zero-shot, source-only classification of severe congestion on an unseen city's road
+network. We introduce \methodname{} (Robust Uncertainty-Guided Diffusion), a compact recurrent
+graph classifier that couples an ID-free shared temporal/topological encoder with degree-normalized
+graph diffusion, dual evidential supervision, effective-number rare-event weighting, and an
+explicit gradient-reversal source-domain alignment term. Under a strictly leave-one-city-out,
+chronologically embargoed protocol on the public OpenCity benchmark (three cities, three fixed
+seeds, 99 main-suite and 63 matched-ablation runs, target labels touched only once at final
+evaluation), a component-level ablation localizes the model's cross-city transfer almost entirely
+to domain-adversarial alignment: removing it costs 3.44 severe-AUPRC points, roughly four times
+the next-largest component effect (graph diffusion, 0.88 points) and roughly thirty times the
+rare-event-specific mechanisms (class balancing, evidential supervision; $\le$0.11 points each).
+Built around this mechanism, \methodname{} attains the best mean macro-F1 (0.8381$\pm$0.0112) and
+severe-event AUPRC (0.8883$\pm$0.0310) among 11 compared models spanning non-learned, classical,
+recurrent, and three clean-room Transformer/GNN adaptations, at 3--12$\times$ fewer parameters
+(38K--67K) than the strongest competitor and with the best proper-scoring-rule calibration (NLL,
+Brier) in the suite -- while its 95\% bootstrap interval over this margin overlaps the runner-up's,
+and it is second, not first, under 30--50\% sensor dropout. We also trace an anomalous
+uncertainty--error correlation in the two evidential models in the suite to a specific asymmetry in
+the evidential KL regularizer that penalizes only target-class evidence, a diagnosis rather than a
+fix. The evidence supports a compact, mechanistically localized, and honestly bounded operating
+point for zero-shot severe-congestion classification, not a universal or state-of-the-art claim.
+\end{abstract}

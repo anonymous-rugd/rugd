@@ -1,0 +1,18 @@
+% Source: outputs/studies/final_study/main/results_all.csv, grouped by
+% (model, target_city) over three seeds each. Cells are Macro-F1 / Severe AUPRC.
+% Regenerate with: python paper/tables/generate_tables.py
+\begin{table}[t]
+\centering
+\caption{Per-city clean results (Macro-F1 / Severe AUPRC), mean $\pm$ SD over three seeds. TrafficHZ is the strongest case for \methodname{}; TrafficCD is a near-tie with STAEformer (0.05 macro-F1 and 0.09 AUPRC points) and should not be presented as a decisive city-level win.}
+\label{tab:percity}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lccc}
+\toprule
+Method & TrafficCD & TrafficHZ & TrafficSH \\
+\midrule
+\textbf{ShiftGuard-RUGD} & 0.8351$\pm$0.0007 / 0.8779$\pm$0.0020 & 0.8524$\pm$0.0009 / 0.9281$\pm$0.0005 & 0.8270$\pm$0.0008 / 0.8588$\pm$0.0007 \\
+STAEformer-Inductive & 0.8346$\pm$0.0015 / 0.8770$\pm$0.0011 & 0.8427$\pm$0.0072 / 0.9260$\pm$0.0018 & 0.8132$\pm$0.0036 / 0.8414$\pm$0.0020 \\
+Graph-GRU & 0.8269$\pm$0.0072 / 0.8671$\pm$0.0221 & 0.8396$\pm$0.0030 / 0.9117$\pm$0.0012 & 0.8229$\pm$0.0028 / 0.8567$\pm$0.0023 \\
+\bottomrule
+\end{tabular}}
+\end{table}

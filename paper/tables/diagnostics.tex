@@ -1,0 +1,19 @@
+% Source: outputs/studies/final_study/main/results_all.csv, neural models only.
+% Regenerate with: python paper/tables/generate_tables.py
+\begin{table}[t]
+\centering
+\caption{Additional neural uncertainty diagnostics, mean over nine runs. ACE: adaptive calibration error. $\rho$: Spearman association between predictive uncertainty and error. Coverage targets 0.90. Temperature is source-calibration-fitted and descriptive, not ranked.}
+\label{tab:diagnostics}
+\begin{tabular}{lcccc}
+\toprule
+Method & ACE $\downarrow$ & Uncertainty--error $\rho$ $\uparrow$ & Severe APS coverage & Temperature \\
+\midrule
+GRU & 0.0065 & 0.4014 & 0.9941 & 0.6534 \\
+Graph-GRU & 0.0111 & 0.3868 & 0.9922 & 0.5158 \\
+UIGNN-Inductive & 0.0060 & 0.0061 & 0.9886 & 0.5014 \\
+STAEformer-Inductive & 0.0054 & 0.4019 & 0.9974 & 0.6166 \\
+OpenCity-Scratch & 0.0063 & 0.3993 & 0.9944 & 0.6171 \\
+\textbf{ShiftGuard-RUGD} & 0.0071 & -0.0526 & 0.9867 & 0.6014 \\
+\bottomrule
+\end{tabular}
+\end{table}

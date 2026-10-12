@@ -1,0 +1,137 @@
+2026-09-13 17:28:50 | INFO | STUDY final_study | 63 registered ablation runs
+2026-09-13 17:28:50 | INFO | [01/63] START | city=TrafficCD variant=rugd seed=17
+2026-09-13 17:28:50 | INFO | [01/63] REUSE | identical tuned main RUGD reference
+2026-09-13 17:28:50 | INFO | [01/63] DONE  | 0.0s | macro_f1=0.83503 severe_auprc=0.87946
+2026-09-13 17:28:50 | INFO | [02/63] START | city=TrafficCD variant=rugd seed=42
+2026-09-13 17:28:50 | INFO | [02/63] REUSE | identical tuned main RUGD reference
+2026-09-13 17:28:50 | INFO | [02/63] DONE  | 0.0s | macro_f1=0.83434 severe_auprc=0.87560
+2026-09-13 17:28:50 | INFO | [03/63] START | city=TrafficCD variant=rugd seed=2025
+2026-09-13 17:28:50 | INFO | [03/63] REUSE | identical tuned main RUGD reference
+2026-09-13 17:28:50 | INFO | [03/63] DONE  | 0.0s | macro_f1=0.83579 severe_auprc=0.87855
+2026-09-13 17:28:50 | INFO | [04/63] START | city=TrafficCD variant=rugd_no_graph seed=17
+2026-09-13 17:31:04 | INFO | [04/63] DONE  | 134.3s | macro_f1=0.83220 severe_auprc=0.87199
+2026-09-13 17:31:04 | INFO | [05/63] START | city=TrafficCD variant=rugd_no_graph seed=42
+2026-09-13 17:33:00 | INFO | [05/63] DONE  | 115.9s | macro_f1=0.82967 severe_auprc=0.86925
+2026-09-13 17:33:00 | INFO | [06/63] START | city=TrafficCD variant=rugd_no_graph seed=2025
+2026-09-13 17:34:49 | INFO | [06/63] DONE  | 109.1s | macro_f1=0.83134 severe_auprc=0.87155
+2026-09-13 17:34:49 | INFO | [07/63] START | city=TrafficCD variant=rugd_no_topology seed=17
+2026-09-13 17:36:09 | INFO | [07/63] DONE  | 80.4s | macro_f1=0.82627 severe_auprc=0.86494
+2026-09-13 17:36:09 | INFO | [08/63] START | city=TrafficCD variant=rugd_no_topology seed=42
+2026-09-13 17:37:13 | INFO | [08/63] DONE  | 63.5s | macro_f1=0.82371 severe_auprc=0.86302
+2026-09-13 17:37:13 | INFO | [09/63] START | city=TrafficCD variant=rugd_no_topology seed=2025
+2026-09-13 17:39:09 | INFO | [09/63] DONE  | 116.1s | macro_f1=0.82744 severe_auprc=0.86978
+2026-09-13 17:39:09 | INFO | [10/63] START | city=TrafficCD variant=rugd_no_domain seed=17
+2026-09-13 17:39:42 | INFO | [10/63] DONE  | 32.9s | macro_f1=0.82003 severe_auprc=0.82068
+2026-09-13 17:39:42 | INFO | [11/63] START | city=TrafficCD variant=rugd_no_domain seed=42
+2026-09-13 17:40:18 | INFO | [11/63] DONE  | 36.5s | macro_f1=0.81664 severe_auprc=0.84862
+2026-09-13 17:40:18 | INFO | [12/63] START | city=TrafficCD variant=rugd_no_domain seed=2025
+2026-09-13 17:40:54 | INFO | [12/63] DONE  | 36.1s | macro_f1=0.81737 severe_auprc=0.84727
+2026-09-13 17:40:54 | INFO | [13/63] START | city=TrafficCD variant=rugd_no_evidence seed=17
+2026-09-13 17:42:20 | INFO | [13/63] DONE  | 85.8s | macro_f1=0.83472 severe_auprc=0.87946
+2026-09-13 17:42:20 | INFO | [14/63] START | city=TrafficCD variant=rugd_no_evidence seed=42
+2026-09-13 17:44:18 | INFO | [14/63] DONE  | 117.6s | macro_f1=0.83512 severe_auprc=0.88142
+2026-09-13 17:44:18 | INFO | [15/63] START | city=TrafficCD variant=rugd_no_evidence seed=2025
+2026-09-13 17:45:21 | INFO | [15/63] DONE  | 63.8s | macro_f1=0.83318 severe_auprc=0.87650
+2026-09-13 17:45:21 | INFO | [16/63] START | city=TrafficCD variant=rugd_no_focal seed=17
+2026-09-13 17:47:18 | INFO | [16/63] DONE  | 116.5s | macro_f1=0.83564 severe_auprc=0.87698
+2026-09-13 17:47:18 | INFO | [17/63] START | city=TrafficCD variant=rugd_no_focal seed=42
+2026-09-13 17:48:48 | INFO | [17/63] DONE  | 90.3s | macro_f1=0.83376 severe_auprc=0.87592
+2026-09-13 17:48:48 | INFO | [18/63] START | city=TrafficCD variant=rugd_no_focal seed=2025
+2026-09-13 17:50:10 | INFO | [18/63] DONE  | 81.6s | macro_f1=0.83363 severe_auprc=0.87305
+2026-09-13 17:50:10 | INFO | [19/63] START | city=TrafficCD variant=rugd_no_class_balance seed=17
+2026-09-13 17:52:25 | INFO | [19/63] DONE  | 135.2s | macro_f1=0.83462 severe_auprc=0.87938
+2026-09-13 17:52:25 | INFO | [20/63] START | city=TrafficCD variant=rugd_no_class_balance seed=42
+2026-09-13 17:53:59 | INFO | [20/63] DONE  | 94.0s | macro_f1=0.83220 severe_auprc=0.87806
+2026-09-13 17:53:59 | INFO | [21/63] START | city=TrafficCD variant=rugd_no_class_balance seed=2025
+2026-09-13 17:55:19 | INFO | [21/63] DONE  | 80.0s | macro_f1=0.83243 severe_auprc=0.87359
+2026-09-13 17:55:19 | INFO | [22/63] START | city=TrafficHZ variant=rugd seed=17
+2026-09-13 17:55:19 | INFO | [22/63] REUSE | identical tuned main RUGD reference
+2026-09-13 17:55:19 | INFO | [22/63] DONE  | 0.0s | macro_f1=0.85215 severe_auprc=0.92844
+2026-09-13 17:55:19 | INFO | [23/63] START | city=TrafficHZ variant=rugd seed=42
+2026-09-13 17:55:19 | INFO | [23/63] REUSE | identical tuned main RUGD reference
+2026-09-13 17:55:19 | INFO | [23/63] DONE  | 0.0s | macro_f1=0.85154 severe_auprc=0.92760
+2026-09-13 17:55:19 | INFO | [24/63] START | city=TrafficHZ variant=rugd seed=2025
+2026-09-13 17:55:19 | INFO | [24/63] REUSE | identical tuned main RUGD reference
+2026-09-13 17:55:19 | INFO | [24/63] DONE  | 0.0s | macro_f1=0.85339 severe_auprc=0.92836
+2026-09-13 17:55:19 | INFO | [25/63] START | city=TrafficHZ variant=rugd_no_graph seed=17
+2026-09-13 17:56:46 | INFO | [25/63] DONE  | 86.8s | macro_f1=0.84915 severe_auprc=0.92130
+2026-09-13 17:56:46 | INFO | [26/63] START | city=TrafficHZ variant=rugd_no_graph seed=42
+2026-09-13 17:58:20 | INFO | [26/63] DONE  | 94.2s | macro_f1=0.84707 severe_auprc=0.92134
+2026-09-13 17:58:20 | INFO | [27/63] START | city=TrafficHZ variant=rugd_no_graph seed=2025
+2026-09-13 18:00:07 | INFO | [27/63] DONE  | 107.1s | macro_f1=0.84749 severe_auprc=0.92263
+2026-09-13 18:00:07 | INFO | [28/63] START | city=TrafficHZ variant=rugd_no_topology seed=17
+2026-09-13 18:01:00 | INFO | [28/63] DONE  | 52.7s | macro_f1=0.84295 severe_auprc=0.91760
+2026-09-13 18:01:00 | INFO | [29/63] START | city=TrafficHZ variant=rugd_no_topology seed=42
+2026-09-13 18:03:20 | INFO | [29/63] DONE  | 140.5s | macro_f1=0.84888 severe_auprc=0.92687
+2026-09-13 18:03:20 | INFO | [30/63] START | city=TrafficHZ variant=rugd_no_topology seed=2025
+2026-09-13 18:06:10 | INFO | [30/63] DONE  | 169.6s | macro_f1=0.85166 severe_auprc=0.92706
+2026-09-13 18:06:10 | INFO | [31/63] START | city=TrafficHZ variant=rugd_no_domain seed=17
+2026-09-13 18:06:50 | INFO | [31/63] DONE  | 39.5s | macro_f1=0.83528 severe_auprc=0.90475
+2026-09-13 18:06:50 | INFO | [32/63] START | city=TrafficHZ variant=rugd_no_domain seed=42
+2026-09-13 18:07:29 | INFO | [32/63] DONE  | 39.3s | macro_f1=0.83817 severe_auprc=0.90355
+2026-09-13 18:07:29 | INFO | [33/63] START | city=TrafficHZ variant=rugd_no_domain seed=2025
+2026-09-13 18:08:08 | INFO | [33/63] DONE  | 39.3s | macro_f1=0.84172 severe_auprc=0.90696
+2026-09-13 18:08:08 | INFO | [34/63] START | city=TrafficHZ variant=rugd_no_evidence seed=17
+2026-09-13 18:09:33 | INFO | [34/63] DONE  | 85.0s | macro_f1=0.85197 severe_auprc=0.92914
+2026-09-13 18:09:33 | INFO | [35/63] START | city=TrafficHZ variant=rugd_no_evidence seed=42
+2026-09-13 18:10:45 | INFO | [35/63] DONE  | 72.3s | macro_f1=0.84886 severe_auprc=0.92795
+2026-09-13 18:10:45 | INFO | [36/63] START | city=TrafficHZ variant=rugd_no_evidence seed=2025
+2026-09-13 18:11:40 | INFO | [36/63] DONE  | 54.9s | macro_f1=0.84711 severe_auprc=0.92357
+2026-09-13 18:11:40 | INFO | [37/63] START | city=TrafficHZ variant=rugd_no_focal seed=17
+2026-09-13 18:13:05 | INFO | [37/63] DONE  | 84.4s | macro_f1=0.85183 severe_auprc=0.91972
+2026-09-13 18:13:05 | INFO | [38/63] START | city=TrafficHZ variant=rugd_no_focal seed=42
+2026-09-13 18:15:45 | INFO | [38/63] DONE  | 160.5s | macro_f1=0.85383 severe_auprc=0.92371
+2026-09-13 18:15:45 | INFO | [39/63] START | city=TrafficHZ variant=rugd_no_focal seed=2025
+2026-09-13 18:17:05 | INFO | [39/63] DONE  | 79.4s | macro_f1=0.85070 severe_auprc=0.91897
+2026-09-13 18:17:05 | INFO | [40/63] START | city=TrafficHZ variant=rugd_no_class_balance seed=17
+2026-09-13 18:18:37 | INFO | [40/63] DONE  | 92.5s | macro_f1=0.85223 severe_auprc=0.92860
+2026-09-13 18:18:37 | INFO | [41/63] START | city=TrafficHZ variant=rugd_no_class_balance seed=42
+2026-09-13 18:19:56 | INFO | [41/63] DONE  | 79.0s | macro_f1=0.84937 severe_auprc=0.92598
+2026-09-13 18:19:56 | INFO | [42/63] START | city=TrafficHZ variant=rugd_no_class_balance seed=2025
+2026-09-13 18:22:32 | INFO | [42/63] DONE  | 156.2s | macro_f1=0.85259 severe_auprc=0.92943
+2026-09-13 18:22:32 | INFO | [43/63] START | city=TrafficSH variant=rugd seed=17
+2026-09-13 18:22:32 | INFO | [43/63] REUSE | identical tuned main RUGD reference
+2026-09-13 18:22:32 | INFO | [43/63] DONE  | 0.0s | macro_f1=0.82613 severe_auprc=0.85844
+2026-09-13 18:22:32 | INFO | [44/63] START | city=TrafficSH variant=rugd seed=42
+2026-09-13 18:22:32 | INFO | [44/63] REUSE | identical tuned main RUGD reference
+2026-09-13 18:22:32 | INFO | [44/63] DONE  | 0.0s | macro_f1=0.82721 severe_auprc=0.85840
+2026-09-13 18:22:32 | INFO | [45/63] START | city=TrafficSH variant=rugd seed=2025
+2026-09-13 18:22:32 | INFO | [45/63] REUSE | identical tuned main RUGD reference
+2026-09-13 18:22:32 | INFO | [45/63] DONE  | 0.0s | macro_f1=0.82774 severe_auprc=0.85960
+2026-09-13 18:22:32 | INFO | [46/63] START | city=TrafficSH variant=rugd_no_graph seed=17
+2026-09-13 18:23:57 | INFO | [46/63] DONE  | 84.2s | macro_f1=0.81815 severe_auprc=0.84596
+2026-09-13 18:23:57 | INFO | [47/63] START | city=TrafficSH variant=rugd_no_graph seed=42
+2026-09-13 18:25:54 | INFO | [47/63] DONE  | 117.6s | macro_f1=0.81928 severe_auprc=0.84941
+2026-09-13 18:25:54 | INFO | [48/63] START | city=TrafficSH variant=rugd_no_graph seed=2025
+2026-09-13 18:26:52 | INFO | [48/63] DONE  | 58.1s | macro_f1=0.81786 severe_auprc=0.84214
+2026-09-13 18:26:52 | INFO | [49/63] START | city=TrafficSH variant=rugd_no_topology seed=17
+2026-09-13 18:28:03 | INFO | [49/63] DONE  | 70.8s | macro_f1=0.81712 severe_auprc=0.84281
+2026-09-13 18:28:03 | INFO | [50/63] START | city=TrafficSH variant=rugd_no_topology seed=42
+2026-09-13 18:29:10 | INFO | [50/63] DONE  | 67.0s | macro_f1=0.81749 severe_auprc=0.84327
+2026-09-13 18:29:10 | INFO | [51/63] START | city=TrafficSH variant=rugd_no_topology seed=2025
+2026-09-13 18:31:38 | INFO | [51/63] DONE  | 148.3s | macro_f1=0.82211 severe_auprc=0.85213
+2026-09-13 18:31:38 | INFO | [52/63] START | city=TrafficSH variant=rugd_no_domain seed=17
+2026-09-13 18:32:15 | INFO | [52/63] DONE  | 36.3s | macro_f1=0.81083 severe_auprc=0.81866
+2026-09-13 18:32:15 | INFO | [53/63] START | city=TrafficSH variant=rugd_no_domain seed=42
+2026-09-13 18:32:52 | INFO | [53/63] DONE  | 37.0s | macro_f1=0.80931 severe_auprc=0.81522
+2026-09-13 18:32:52 | INFO | [54/63] START | city=TrafficSH variant=rugd_no_domain seed=2025
+2026-09-13 18:33:30 | INFO | [54/63] DONE  | 38.0s | macro_f1=0.80949 severe_auprc=0.81885
+2026-09-13 18:33:30 | INFO | [55/63] START | city=TrafficSH variant=rugd_no_evidence seed=17
+2026-09-13 18:35:03 | INFO | [55/63] DONE  | 93.2s | macro_f1=0.82394 severe_auprc=0.85633
+2026-09-13 18:35:03 | INFO | [56/63] START | city=TrafficSH variant=rugd_no_evidence seed=42
+2026-09-13 18:35:51 | INFO | [56/63] DONE  | 48.3s | macro_f1=0.82138 severe_auprc=0.85290
+2026-09-13 18:35:51 | INFO | [57/63] START | city=TrafficSH variant=rugd_no_evidence seed=2025
+2026-09-13 18:37:20 | INFO | [57/63] DONE  | 88.6s | macro_f1=0.82530 severe_auprc=0.85893
+2026-09-13 18:37:20 | INFO | [58/63] START | city=TrafficSH variant=rugd_no_focal seed=17
+2026-09-13 18:39:07 | INFO | [58/63] DONE  | 107.5s | macro_f1=0.82816 severe_auprc=0.85924
+2026-09-13 18:39:07 | INFO | [59/63] START | city=TrafficSH variant=rugd_no_focal seed=42
+2026-09-13 18:40:42 | INFO | [59/63] DONE  | 94.3s | macro_f1=0.82247 severe_auprc=0.85115
+2026-09-13 18:40:42 | INFO | [60/63] START | city=TrafficSH variant=rugd_no_focal seed=2025
+2026-09-13 18:42:42 | INFO | [60/63] DONE  | 120.6s | macro_f1=0.82693 severe_auprc=0.85907
+2026-09-13 18:42:42 | INFO | [61/63] START | city=TrafficSH variant=rugd_no_class_balance seed=17
+2026-09-13 18:43:55 | INFO | [61/63] DONE  | 72.9s | macro_f1=0.82419 severe_auprc=0.85329
+2026-09-13 18:43:55 | INFO | [62/63] START | city=TrafficSH variant=rugd_no_class_balance seed=42
+2026-09-13 18:45:42 | INFO | [62/63] DONE  | 107.2s | macro_f1=0.82556 severe_auprc=0.85698
+2026-09-13 18:45:42 | INFO | [63/63] START | city=TrafficSH variant=rugd_no_class_balance seed=2025
+2026-09-13 18:48:05 | INFO | [63/63] DONE  | 143.2s | macro_f1=0.82676 severe_auprc=0.85932
+2026-09-13 18:48:17 | INFO | COMPLETE | elapsed 79.5 minutes | summary=outputs\studies\final_study\ablations\RESEARCH_SUMMARY.md

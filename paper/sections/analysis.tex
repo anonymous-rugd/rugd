@@ -1,0 +1,40 @@
+\section{Analysis: An Asymmetry in the Evidential KL Term}
+\label{sec:analysis}
+
+Every softmax-based model in the suite shows predicted uncertainty tracking prediction error at a
+consistent Spearman $\rho\approx0.39$--$0.42$ (GRU 0.4014$\pm$0.0074, Graph-GRU 0.3868$\pm$0.0092,
+STAEformer-Inductive 0.4019$\pm$0.0037, OpenCity-Scratch 0.3993$\pm$0.0062, and the three classical
+controls at 0.42--0.43) -- exactly what a useful uncertainty estimate should do.
+\textbf{The two Dirichlet/evidential models in the suite are the only outliers}: \methodname{} is
+$-0.0526\pm0.0782$ and UIGNN-Inductive is $0.0061\pm0.0410$
+(\texttt{outputs/studies/final\_study/main/results\_all.csv},
+column \texttt{uncertainty\_error\_spearman}). Both anomalous models share the same evidential-KL
+construction described in \Cref{eq:classification-loss}: the regularizer
+$\mathrm{KL}[\mathrm{Dir}(\tilde{\boldsymbol\alpha}_i)\,\|\,\mathrm{Dir}(\mathbf{1})]$ is computed
+on $\tilde{\boldsymbol\alpha}_i$, which retains the network's predicted concentration only at the
+\emph{true} class index and fixes every other class's concentration to one
+(\texttt{src/traffic\_ml/losses.py}, lines 31--33). Concretely, for a 3-class Dirichlet with
+predicted concentrations $(\alpha_1,\alpha_2,\alpha_3)$ and true class $y=1$, the KL term sees
+$\tilde{\boldsymbol\alpha}=(\alpha_1,1,1)$: whatever evidence the network accumulates on classes 2
+and 3 is invisible to this regularizer regardless of whether the prediction was correct.
+
+This is the reverse of the construction in \citet{sensoy2018evidential}, where the KL-to-uniform
+penalty is applied to the concentrations \emph{excluding} the true class, specifically to suppress
+unwarranted evidence on incorrect classes -- the mechanism by which evidential deep learning
+produces uncertainty that grows with the plausibility of competing wrong answers. Under the
+construction implemented here, a network can accumulate large, unpenalized evidence on an incorrect
+class without any corresponding regularization pressure, which would manifest exactly as we observe
+it: predicted vacuity that fails to track actual error, because the model's confidence is shaped by
+a term that never sees where the network's evidence is misallocated.
+
+We did not fix and re-run this construction: this sandboxed evaluation environment has no GPU and
+no PyTorch installation, so a corrected KL term (regularizing non-target concentrations, matching
+\citet{sensoy2018evidential}) could not be trained and evaluated end-to-end for this paper. We
+report this as a specific, checkable diagnosis rather than a closed, fixed result, and we note two
+things it does \emph{not} undermine: first, the headline accuracy numbers in
+\Cref{sec:results-clean} come from $\arg\max$ over the Dirichlet expectation $\hat p_i=\alpha_i/\sum_k
+\alpha_{ik}$, not from the KL term directly, so this asymmetry does not implicate the classification
+results; second, it is consistent, specific, and falsifiable -- a corrected implementation predicts
+both anomalous models' uncertainty--error correlation should move toward the $\rho\approx0.4$ band
+shared by every softmax baseline, which is a concrete, testable prediction for follow-up work rather
+than an unexplained residual.

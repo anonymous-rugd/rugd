@@ -1,0 +1,26 @@
+% Source: outputs/studies/final_study/main/robustness_all.csv, missingness rows only
+% (full 7-condition table is tables/full_robustness.tex in the appendix).
+% Regenerate with: python paper/tables/generate_tables.py
+\begin{table}[t]
+\centering
+\caption{Severe AUPRC under 30\% and 50\% independently-masked sensor observations, mean $\pm$ SD over nine city--seed runs; clean-fit source calibration is reused (not re-tuned per condition). Bold marks the best mean per column. See \Cref{app:robustness-full} for all seven registered corruption conditions.}
+\label{tab:robustness}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lcc}
+\toprule
+Method & 30\% missing & 50\% missing \\
+\midrule
+\textbf{ShiftGuard-RUGD} & 0.7938$\pm$0.0532 & 0.7242$\pm$0.0718 \\
+STAEformer-Inductive & \textbf{0.8139$\pm$0.0630} & \textbf{0.7459$\pm$0.0878} \\
+Graph-GRU & 0.7408$\pm$0.0953 & 0.5421$\pm$0.2060 \\
+GRU & 0.6900$\pm$0.0806 & 0.4734$\pm$0.1359 \\
+OpenCity-Scratch & 0.6461$\pm$0.1285 & 0.3784$\pm$0.1885 \\
+LightGBM & 0.5597$\pm$0.1253 & 0.3551$\pm$0.1289 \\
+HGBDT & 0.5470$\pm$0.1345 & 0.3447$\pm$0.1334 \\
+Persistence & 0.4750$\pm$0.0659 & 0.3703$\pm$0.0610 \\
+UIGNN-Inductive & 0.7395$\pm$0.0509 & 0.6247$\pm$0.0597 \\
+Logistic & 0.3164$\pm$0.0612 & 0.2192$\pm$0.0538 \\
+Prior & 0.1117$\pm$0.0505 & 0.1117$\pm$0.0505 \\
+\bottomrule
+\end{tabular}}
+\end{table}
